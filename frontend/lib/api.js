@@ -64,6 +64,19 @@ const patients = [
   },
 ];
 
+const donors = [
+  { id: 1, name: "Kamal Rathnayake", type: "Blood", group: "O−", district: "Colombo", available: true, urgent: true },
+  { id: 2, name: "Dinesh Madushanka", type: "Blood", group: "A+", district: "Kalutara", available: true, urgent: true },
+  { id: 3, name: "Priya Sivarajah", type: "Blood", group: "B+", district: "Jaffna", available: true, urgent: false },
+  { id: 4, name: "Sanduni Weerasinghe", type: "Blood", group: "O+", district: "Galle", available: false, urgent: false },
+  { id: 5, name: "M. Rifkhan", type: "Blood", group: "AB−", district: "Kandy", available: true, urgent: true },
+  { id: 6, name: "Chathura Bandara", type: "Blood", group: "O−", district: "Kalutara", available: true, urgent: false },
+  { id: 7, name: "Nadeesha Kumari", type: "Organ pledge", group: "O+", district: "Kalutara", organ: "Kidney", available: true, urgent: true },
+  { id: 8, name: "S. Thavarajah", type: "Organ pledge", group: "B+", district: "Colombo", organ: "Cornea", available: true, urgent: false },
+  { id: 9, name: "Ruwan Jayasooriya", type: "Organ pledge", group: "A−", district: "Kurunegala", organ: "Bone marrow", available: true, urgent: true },
+  { id: 10, name: "Anonymous pledge", type: "Organ pledge", group: "O+", district: "Gampaha", organ: "Any — after life", available: true, urgent: false },
+];
+
 const urgentNeeds = [
   { icon: "🩸", title: "O− blood needed", text: "for Sithmi's surgery — Lady Ridgeway Children's Hospital.", when: "Needed today", button: "Find O− donors", href: "/donors?q=o−" },
   { icon: "💰", title: "Nimal's kidney transplant", text: "— surgery scheduled, funding still short.", when: "12 days left", button: "Donate", donateId: 1 },
@@ -93,4 +106,8 @@ export async function getFeaturedPatients(limit = 3) {
 
 export async function getUrgentBoard() {
   return { needs: urgentNeeds, donors: urgentDonors };
+}
+
+export async function getDonors() {
+  return donors;
 }
