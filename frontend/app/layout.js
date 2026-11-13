@@ -2,6 +2,7 @@ import { Bricolage_Grotesque, Instrument_Sans, Noto_Sans_Sinhala } from "next/fo
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { DonateProvider } from "@/components/DonateProvider";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display" });
@@ -17,11 +18,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${sinhala.variable}`}>
       <body>
-        <DonateProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </DonateProvider>
+        <LanguageProvider>
+          <DonateProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </DonateProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

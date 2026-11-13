@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "./LanguageProvider";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const links = [
-  { href: "/patients", label: "Patients" },
-  { href: "/donors", label: "Donor directory" },
-  { href: "/register-donor", label: "Register as donor" },
-  { href: "/#how", label: "How it works" },
+  { href: "/patients", key: "nav_patients" },
+  { href: "/donors", key: "nav_donors" },
+  { href: "/register-donor", key: "nav_regdonor" },
+  { href: "/#how", key: "nav_how" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   return (
     <header>
@@ -29,20 +32,16 @@ export default function Header() {
         <nav className="navlinks">
           {links.map((l) => (
             <Link key={l.href} href={l.href} className={pathname === l.href ? "on" : ""}>
-              {l.label}
+              {t(l.key)}
             </Link>
           ))}
         </nav>
 
-        <Link className="btn btn-ghost nav-login" href="/login" style={{ marginLeft: "auto" }}>
-          Log in
-        </Link>
-        <Link className="btn btn-blue" href="/register-patient">
-          ＋ Register patient
-        </Link>
-        <Link className="btn btn-green" href="/patients">
-          Donate now
-        </Link>
+        <LanguageSwitcher />
+
+        <Link className="btn btn-ghost nav-login" href="/login">{t("nav_login")}</Link>
+        <Link className="btn btn-blue" href="/register-patient">{t("reg_patient")}</Link>
+        <Link className="btn btn-green" href="/patients">{t("donate_now")}</Link>
       </div>
     </header>
   );
