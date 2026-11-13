@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
 import { BLOOD_GROUPS, DISTRICTS } from "@/lib/constants";
+import { useLanguage } from "./LanguageProvider";
 
 function SubmitButton({ className, label, doneLabel }) {
   const [sent, setSent] = useState(false);
@@ -20,12 +20,14 @@ function SubmitButton({ className, label, doneLabel }) {
 }
 
 export default function DonorSignup() {
+  const { lang, t } = useLanguage();
+
   return (
     <div className="wrap duo">
       <div className="mod blood">
         <span className="glyph">🩸</span>
-        <h3>Become a blood donor <span className="si">රුධිර දායකයෙක් වන්න</span></h3>
-        <p>Register your blood group and district. Hospitals and patients reach you through MedFund — your phone number stays private.</p>
+        <h3>{t("blood_h")} {lang === "en" && <span className="si">රුධිර දායකයෙක් වන්න</span>}</h3>
+        <p>{t("blood_p")}</p>
         <div className="formgrid">
           <div className="field"><label>Full name</label><input placeholder="Your name" /></div>
           <div className="field">
@@ -47,7 +49,7 @@ export default function DonorSignup() {
             </div>
           </div>
           <div className="field full">
-            <SubmitButton className="btn-blue" label="Register as donor" doneLabel="Registered ✓ We'll contact you when a match is needed" />
+            <SubmitButton className="btn-blue" label={t("blood_btn")} doneLabel="Registered ✓ We'll contact you when a match is needed" />
           </div>
         </div>
         <p className="legal">Contact requests are routed through MedFund. Your details are never listed publicly.</p>
@@ -55,8 +57,8 @@ export default function DonorSignup() {
 
       <div className="mod organ" id="organ">
         <span className="glyph">🫀</span>
-        <h3>Organ donation pledge <span className="si">ඉන්ද්‍රිය පරිත්‍යාග ප්‍රතිඥාව</span></h3>
-        <p>Record your intent to donate. MedFund is a pledge registry — actual donation and allocation happen only through licensed hospitals under Sri Lankan law.</p>
+        <h3>{t("organ_h")} {lang === "en" && <span className="si">ඉන්ද්‍රිය පරිත්‍යාග ප්‍රතිඥාව</span>}</h3>
+        <p>{t("organ_p")}</p>
         <div className="formgrid">
           <div className="field"><label>Full name</label><input placeholder="Your name" /></div>
           <div className="field">
@@ -83,7 +85,7 @@ export default function DonorSignup() {
             </div>
           </div>
           <div className="field full">
-            <SubmitButton className="btn-green" label="Record my pledge" doneLabel="Pledge recorded ✓ A hospital coordinator will guide next steps" />
+            <SubmitButton className="btn-green" label={t("organ_btn")} doneLabel="Pledge recorded ✓ A hospital coordinator will guide next steps" />
           </div>
         </div>
         <p className="legal">Pledges are shared only with hospital transplant units. Consent can be withdrawn at any time.</p>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useDonate } from "./DonateProvider";
+import { useLanguage } from "./LanguageProvider";
 
 function UrgentItem({ item, buttonClass, patients }) {
   const { openDonate } = useDonate();
@@ -27,16 +28,18 @@ function UrgentItem({ item, buttonClass, patients }) {
 }
 
 export default function UrgentBoard({ needs, donors, patients }) {
+  const { t } = useLanguage();
+
   return (
     <div className="uboard">
       <div className="ucol need">
-        <div className="uhead">🚨 Urgent needs <span>patients waiting for help right now</span></div>
+        <div className="uhead">{t("uneed_h")} <span>{t("uneed_sub")}</span></div>
         {needs.map((item) => (
           <UrgentItem key={item.title} item={item} buttonClass="btn-blue" patients={patients} />
         ))}
       </div>
       <div className="ucol give">
-        <div className="uhead">⚡ Urgent donors <span>ready to give right now</span></div>
+        <div className="uhead">{t("ugive_h")} <span>{t("ugive_sub")}</span></div>
         {donors.map((item) => (
           <UrgentItem key={item.title} item={item} buttonClass="btn-green" patients={patients} />
         ))}

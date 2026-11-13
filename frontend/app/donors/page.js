@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import DonorDirectory from "@/components/DonorDirectory";
+import T from "@/components/T";
 import { getDonors } from "@/lib/api";
 
 export const metadata = {
@@ -13,13 +14,13 @@ export default async function DonorsPage() {
   return (
     <section>
       <div className="wrap">
-        <Link className="backbtn" href="/" style={{ marginBottom: 18 }}>← Back to home</Link>
+        <Link className="backbtn" href="/" style={{ marginBottom: 18 }}><T k="back_home" /></Link>
         <div className="sec-head">
           <div>
-            <h2>Donor directory</h2>
+            <h2><T k="dir_title" /></h2>
             <span className="si">දායක නාමාවලිය · நன்கொடையாளர் பட்டியல்</span>
           </div>
-          <Link className="btn btn-blue" href="/register-donor">+ Register as a donor</Link>
+          <Link className="btn btn-blue" href="/register-donor"><T k="reg_donor_btn" /></Link>
         </div>
 
         {/* useSearchParams needs a Suspense boundary so the rest of the page can be prerendered */}

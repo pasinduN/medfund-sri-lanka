@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { formatRs } from "@/lib/format";
+import { useLanguage } from "./LanguageProvider";
 
 // Fake activity for the prototype — will come from the donations API later
 const DONORS = [["Anonymous", "#5C7885"], ["Ishara F.", "#15628F"], ["Kamal R.", "#1F9D6C"], ["W. Gunasekara", "#B03A6E"], ["Priya S.", "#7C5CBF"], ["Dinesh M.", "#B8860B"]];
@@ -17,6 +18,7 @@ function randomTick() {
 }
 
 export default function LiveTicker() {
+  const { t } = useLanguage();
   const [ticks, setTicks] = useState([]);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function LiveTicker() {
 
   return (
     <div className="ticker-card">
-      <h3><span className="dot" /> Live donations</h3>
+      <h3><span className="dot" /> {t("live_don")}</h3>
       {ticks.map((t) => (
         <div className="tick" key={t.id}>
           <div className="av" style={{ background: t.color }}>{t.name[0]}</div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProgressBar from "./ProgressBar";
 import { colors, formatRs, percentRaised } from "@/lib/format";
+import { useLanguage } from "./LanguageProvider";
 
 const FILTERS = ["All", "Urgent", "Kidney", "Cancer", "Heart", "Surgery", "Completed"];
 
@@ -16,6 +17,7 @@ function matchesFilter(p, filter) {
 
 export default function PatientList({ patients }) {
   const router = useRouter();
+  const { t } = useLanguage();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("All");
 
@@ -35,7 +37,7 @@ export default function PatientList({ patients }) {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name, disease or hospital…"
+            placeholder={t("search_ph")}
           />
         </div>
         <div className="chips">
@@ -63,15 +65,15 @@ export default function PatientList({ patients }) {
               <div className="pname">
                 {p.name} <span className="vbadge">✓</span>
                 {p.urgent && !p.closed && (
-                  <span className="vbadge" style={{ background: "var(--urgent-soft)", color: "var(--urgent)" }}>⚡ Urgent</span>
+                  <span className="vbadge" style={{ background: "var(--urgent-soft)", color: "var(--urgent)" }}>⚡ {t("urgent")}</span>
                 )}
-                {p.closed && <span className="vbadge">Completed</span>}
+                {p.closed && <span className="vbadge">{t("completed")}</span>}
               </div>
               <div className="pmeta">{p.disease} · {p.hospital}</div>
               <ProgressBar percent={percentRaised(p)} cells={20} />
             </div>
             <div className="rowamt">
-              <b>{formatRs(p.got)}</b>of {formatRs(p.need)}
+              <b>{formatRs(p.got)}</b>{t("of_")} {formatRs(p.need)}
             </div>
             <span className="chev">›</span>
           </div>

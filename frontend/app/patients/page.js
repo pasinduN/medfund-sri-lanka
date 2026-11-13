@@ -1,6 +1,7 @@
 import Link from "next/link";
 import UrgentAlerts from "@/components/UrgentAlerts";
 import PatientList from "@/components/PatientList";
+import T from "@/components/T";
 import { getPatients, getUrgentBoard } from "@/lib/api";
 
 export const metadata = {
@@ -13,16 +14,16 @@ export default async function PatientsPage() {
   return (
     <section>
       <div className="wrap">
-        <Link className="backbtn" href="/" style={{ marginBottom: 18 }}>← Back to home</Link>
+        <Link className="backbtn" href="/" style={{ marginBottom: 18 }}><T k="back_home" /></Link>
 
         <UrgentAlerts needs={urgent.needs} donors={urgent.donors} patients={patients} />
 
         <div className="sec-head">
           <div>
-            <h2>All patients</h2>
+            <h2><T k="all_patients" /></h2>
             <span className="si">සියලුම රෝගීන් · scroll to see more</span>
           </div>
-          <Link className="btn btn-ghost" href="/donors">Donor directory →</Link>
+          <Link className="btn btn-ghost" href="/donors"><T k="donor_dir_btn" /></Link>
         </div>
 
         <PatientList patients={patients} />

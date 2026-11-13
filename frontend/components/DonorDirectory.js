@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useLanguage } from "./LanguageProvider";
 
 const FILTERS = [
   { key: "all", label: "All" },
@@ -20,6 +21,7 @@ function matchesFilter(d, filter) {
 }
 
 function ContactButton() {
+  const { t } = useLanguage();
   const [sent, setSent] = useState(false);
 
   return (
@@ -32,13 +34,14 @@ function ContactButton() {
         setTimeout(() => setSent(false), 2600);
       }}
     >
-      {sent ? "Request sent ✓ MedFund will connect you" : "Request contact"}
+      {sent ? "Request sent ✓ MedFund will connect you" : t("req_contact")}
     </button>
   );
 }
 
 export default function DonorDirectory({ donors }) {
   const searchParams = useSearchParams();
+  const { t } = useLanguage();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
   const [filter, setFilter] = useState(searchParams.get("filter") ?? "all");
 
@@ -58,7 +61,7 @@ export default function DonorDirectory({ donors }) {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by district… (e.g. Kalutara, Jaffna) or blood group"
+            placeholder={t("dsearch_ph")}
           />
         </div>
         <div className="chips">
@@ -86,11 +89,11 @@ export default function DonorDirectory({ donors }) {
               <div className="bg">{isOrgan ? "🫀" : d.group}</div>
               <div className="mid">
                 <div className="pname">
-                  {d.name} <span className="vbadge">✓ Verified</span>
+                  {d.name} <span className="vbadge">{t("verified")}</span>
                   {d.urgent ? (
-                    <span className="vbadge" style={{ background: "#FFF1E0", color: "#B8860B" }}>⚡ Urgent responder</span>
+                    <span className="vbadge" style={{ background: "#FFF1E0", color: "#B8860B" }}>{t("urg_resp")}</span>
                   ) : (
-                    <span className="vbadge" style={{ background: "var(--mist)", color: "var(--muted)" }}>Non-urgent</span>
+                    <span className="vbadge" style={{ background: "var(--mist)", color: "var(--muted)" }}>{t("nonurg")}</span>
                   )}
                 </div>
                 <div className="pmeta">
@@ -98,7 +101,7 @@ export default function DonorDirectory({ donors }) {
                   {" "}· 📍 {d.district} district
                 </div>
               </div>
-              <span className={`avail ${d.available ? "" : "off"}`}>{d.available ? "Available" : "Recently donated"}</span>
+              <span className={`avail ${d.available ? "" : "off"}`}>{d.available ? t("avail") : t("cooldown")}</span>
               <ContactButton />
             </div>
           );

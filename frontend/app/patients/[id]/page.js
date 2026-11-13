@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import DocumentViewer from "@/components/DocumentViewer";
 import DonateBox from "@/components/DonateBox";
+import T from "@/components/T";
 import { getPatient, getPatients } from "@/lib/api";
 import { colors, patientGradient } from "@/lib/format";
 
@@ -28,7 +29,7 @@ export default async function PatientDetailPage({ params }) {
   return (
     <>
       <div className="wrap" style={{ paddingTop: 22 }}>
-        <Link className="backbtn" href="/patients">← Back to patient list</Link>
+        <Link className="backbtn" href="/patients"><T k="back_list" /></Link>
       </div>
 
       <div className="wrap detail">

@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import { useDonate } from "./DonateProvider";
+import { useLanguage } from "./LanguageProvider";
 
 function Alert({ item, type, patients }) {
   const { openDonate } = useDonate();
+  const { t } = useLanguage();
   const isNeed = type === "need";
   const buttonClass = isNeed ? "btn-blue" : "btn-green";
 
   return (
     <div className={`alert ${type}`}>
-      <span className="pill">{isNeed ? "URGENT NEED" : "URGENT DONOR"}</span>
+      <span className="pill">{t(isNeed ? "pill_need" : "pill_give")}</span>
       <span>
         {item.icon} <b>{item.title}</b> {item.text}
       </span>

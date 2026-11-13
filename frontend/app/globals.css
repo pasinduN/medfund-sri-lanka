@@ -103,6 +103,10 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,2.6vw,2.1re
 .seg i.h{background:linear-gradient(90deg,var(--green) 50%,var(--mist) 50%)}
 .amts{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}
 .amts b{color:var(--ink);font-family:var(--display)}
+.amts b{color:var(--ink);font-family:var(--display)}
+.amts{gap:6px 12px;flex-wrap:wrap}
+.amts b,.amts span{white-space:nowrap}
+.trustline b{white-space:nowrap}
 .pcard .btn{margin-top:auto;justify-content:center}
 
 /* ---------- list view ---------- */

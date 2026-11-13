@@ -3,20 +3,16 @@ import LiveTicker from "@/components/LiveTicker";
 import UrgentBoard from "@/components/UrgentBoard";
 import PatientCard from "@/components/PatientCard";
 import DonorSignup from "@/components/DonorSignup";
+import T from "@/components/T";
 import { getPatients, getFeaturedPatients, getUrgentBoard } from "@/lib/api";
 
-const STEPS = [
-  { title: "Patient applies", text: "Uploads medical reports, hospital letters, cost estimate and GN certificate." },
-  { title: "AI document check", text: "OCR and forgery detection flag stamps, signatures, duplicates and edited images." },
-  { title: "Human approval", text: "Our admin team reviews every AI result. No campaign auto-approves itself." },
-  { title: "Funds disbursed", text: "Donations sit in MedFund's audited account and are paid to the hospital or patient with receipts." },
-];
+const STEPS = ["s1", "s2", "s3", "s4"];
 
 const STATS = [
-  ["Rs 48.2M", "raised to date"],
-  ["312", "campaigns completed"],
-  ["1,840", "blood donors registered"],
-  ["100%", "documents human-reviewed"],
+  ["Rs 48.2M", "trust1"],
+  ["312", "trust2"],
+  ["1,840", "trust3"],
+  ["100%", "trust4"],
 ];
 
 export default async function HomePage() {
@@ -27,25 +23,20 @@ export default async function HomePage() {
       <section className="hero">
         <div className="wrap">
           <div>
-            <span className="eyebrow"><span className="dot" /> Every campaign verified before it goes live</span>
-            <h1>
-              Help a verified patient<br />get the treatment<br />they <span className="hl">can&apos;t afford alone</span>.
-            </h1>
-            <p className="sub">
-              MedFund lists only patients whose medical documents have been AI-checked and approved by our review team.
-              Your donation goes to the platform&apos;s audited account — never to an unverified personal number.
-            </p>
+            <span className="eyebrow"><span className="dot" /> <T k="eyebrow" /></span>
+            <h1><T k="h1" html /></h1>
+            <p className="sub"><T k="sub" /></p>
             <span className="si si-line">
               සත්‍යාපිත රෝගීන් සඳහා ආරක්ෂිත මූල්‍ය ආධාර · சரிபார்க்கப்பட்ட நோயாளிகளுக்கு பாதுகாப்பான நிதி உதவி
             </span>
             <div className="hero-actions">
-              <Link className="btn btn-green btn-big" href="/patients">Browse patients</Link>
-              <Link className="btn btn-blue btn-big" href="/register-patient">＋ Register a patient</Link>
-              <Link className="btn btn-ghost btn-big" href="#how">How verification works</Link>
+              <Link className="btn btn-green btn-big" href="/patients"><T k="browse" /></Link>
+              <Link className="btn btn-blue btn-big" href="/register-patient"><T k="reg_a_patient" /></Link>
+              <Link className="btn btn-ghost btn-big" href="#how"><T k="how_verif" /></Link>
             </div>
             <div className="trustline">
-              {STATS.map(([value, label]) => (
-                <div key={label}><b>{value}</b><span>{label}</span></div>
+              {STATS.map(([value, key]) => (
+                <div key={key}><b>{value}</b><span><T k={key} /></span></div>
               ))}
             </div>
           </div>
@@ -63,10 +54,10 @@ export default async function HomePage() {
         <div className="wrap">
           <div className="sec-head">
             <div>
-              <h2>Patients who need help now</h2>
+              <h2><T k="feat" /></h2>
               <span className="si">දැන් උදව් අවශ්‍ය රෝගීන්</span>
             </div>
-            <Link className="seeall" href="/patients">See all patients →</Link>
+            <Link className="seeall" href="/patients"><T k="seeall" /></Link>
           </div>
           <div className="cards">
             {featured.map((p) => <PatientCard key={p.id} patient={p} />)}
@@ -78,16 +69,16 @@ export default async function HomePage() {
         <div className="wrap">
           <div className="sec-head">
             <div>
-              <h2>How a campaign earns its badge</h2>
+              <h2><T k="how_t" /></h2>
               <span className="si">සත්‍යාපනය සිදුවන ආකාරය</span>
             </div>
           </div>
           <div className="steps">
-            {STEPS.map((s, i) => (
-              <div className="step" key={s.title}>
+            {STEPS.map((step, i) => (
+              <div className="step" key={step}>
                 <span className="n">{i + 1}</span>
-                <b>{s.title}</b>
-                <p>{s.text}</p>
+                <b><T k={`${step}b`} /></b>
+                <p><T k={`${step}p`} /></p>
               </div>
             ))}
           </div>
