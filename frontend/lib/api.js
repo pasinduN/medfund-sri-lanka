@@ -111,3 +111,30 @@ export async function getUrgentBoard() {
 export async function getDonors() {
   return donors;
 }
+
+const applications = [
+  {
+    id: "MED-2026-PENDING-0192", name: "Saman Kumara", disease: "Kidney failure", hospital: "Teaching Hospital, Kurunegala",
+    district: "Kurunegala", need: 1800000, urgent: true, submitted: "09 Nov 2026",
+    checks: { stamp: "pass", signature: "pass", duplicate: "pass", edits: "pass" },
+  },
+  {
+    id: "MED-2026-PENDING-0189", name: "Hiruni Fernando", disease: "Congenital heart defect", hospital: "Lady Ridgeway Children's Hospital",
+    district: "Gampaha", need: 3200000, urgent: true, submitted: "08 Nov 2026",
+    checks: { stamp: "pass", signature: "pass", duplicate: "pass", edits: "warn" },
+  },
+  {
+    id: "MED-2026-PENDING-0185", name: "K. Rajendran", disease: "Cataract surgery", hospital: "Batticaloa Teaching Hospital",
+    district: "Batticaloa", need: 240000, urgent: false, submitted: "06 Nov 2026",
+    checks: { stamp: "pass", signature: "warn", duplicate: "pass", edits: "pass" },
+  },
+  {
+    id: "MED-2026-PENDING-0181", name: "Unknown applicant", disease: "Cancer treatment", hospital: "Apeksha Hospital, Maharagama",
+    district: "Colombo", need: 5000000, urgent: false, submitted: "05 Nov 2026",
+    checks: { stamp: "fail", signature: "warn", duplicate: "fail", edits: "warn" },
+  },
+];
+
+export async function getPendingApplications() {
+  return applications;
+}
