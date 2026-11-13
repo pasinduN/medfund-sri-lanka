@@ -14,6 +14,7 @@ export default function Footer() {
           <h5>Platform</h5>
           <Link href="/patients">Browse patients</Link>
           <Link href="/register-patient">Start a campaign</Link>
+          <Link href="/login">Log in</Link>
           <a>Success stories</a>
         </div>
         <div>

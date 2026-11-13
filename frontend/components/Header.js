@@ -34,7 +34,10 @@ export default function Header() {
           ))}
         </nav>
 
-        <Link className="btn btn-blue" href="/register-patient" style={{ marginLeft: "auto" }}>
+        <Link className="btn btn-ghost nav-login" href="/login" style={{ marginLeft: "auto" }}>
+          Log in
+        </Link>
+        <Link className="btn btn-blue" href="/register-patient">
           ＋ Register patient
         </Link>
         <Link className="btn btn-green" href="/patients">
