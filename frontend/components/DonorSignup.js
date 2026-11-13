@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const BLOOD_GROUPS = ["A+", "A−", "B+", "B−", "O+", "O−", "AB+", "AB−"];
+import { BLOOD_GROUPS, DISTRICTS } from "@/lib/constants";
 
 function SubmitButton({ className, label, doneLabel }) {
   const [sent, setSent] = useState(false);
@@ -34,8 +34,8 @@ export default function DonorSignup() {
           </div>
           <div className="field">
             <label>District</label>
-            <select>
-              {["Kalutara", "Colombo", "Gampaha", "Kandy", "Galle", "Jaffna", "Kurunegala"].map((d) => <option key={d}>{d}</option>)}
+            <select defaultValue="Colombo">
+              {DISTRICTS.map((d) => <option key={d}>{d}</option>)}
             </select>
           </div>
           <div className="field"><label>Phone (kept private)</label><input placeholder="07X XXX XXXX" /></div>
@@ -71,8 +71,8 @@ export default function DonorSignup() {
           </div>
           <div className="field">
             <label>District</label>
-            <select>
-              {["Kalutara", "Colombo", "Kandy", "Galle"].map((d) => <option key={d}>{d}</option>)}
+            <select defaultValue="Colombo">
+              {DISTRICTS.map((d) => <option key={d}>{d}</option>)}
             </select>
           </div>
           <div className="field full">

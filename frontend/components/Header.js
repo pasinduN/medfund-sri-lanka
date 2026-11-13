@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const links = [
   { href: "/patients", label: "Patients" },
   { href: "/donors", label: "Donor directory" },
-  { href: "/#blood", label: "Register as donor" },
+  { href: "/register-donor", label: "Register as donor" },
   { href: "/#how", label: "How it works" },
 ];
 

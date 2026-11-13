@@ -18,8 +18,8 @@ export default function Footer() {
         </div>
         <div>
           <h5>Donate</h5>
-          <Link href="/#blood">Blood donors</Link>
-          <Link href="/#organ">Organ pledge</Link>
+          <Link href="/register-donor">Blood donors</Link>
+          <Link href="/register-donor#organ">Organ pledge</Link>
           <a>Report fraud</a>
         </div>
         <div>
