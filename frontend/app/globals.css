@@ -382,10 +382,22 @@ main{animation:fade .35s ease}
 .role-pick label span{font-weight:500;font-size:.76rem;color:var(--muted)}
 .role-pick label:has(input:checked){border-color:var(--green);background:var(--green-soft)}
 .role-pick input{display:none}
+
+/* ---------- header buttons ---------- */
+.nav{gap:18px}
+.navlinks{gap:16px;margin-left:0}
+.navlinks a,.nav .btn,.logo{white-space:nowrap}
+.nav .btn{padding:10px 16px}
+.btn-soft{background:var(--mist);color:var(--blue-deep)}
+.btn-soft:hover{background:#D3E5EC;color:var(--blue)}
+.logo-sub{font-size:.7rem;font-weight:600;color:var(--muted)}
 .foot-langs{display:inline-flex;margin-top:16px;background:rgba(255,255,255,.1)}
 .foot-langs button{color:#B9CCD4}
 .foot-langs button.on{background:#fff;color:var(--ink)}
-@media(max-width:600px){.nav .nav-login{display:none}}
+.nav .nav-donate{display:none}
+@media(max-width:600px){.nav .nav-login,.nav .nav-register{display:none}.nav .nav-donate{display:inline-flex;margin-left:auto}}
+@media(max-width:1160px){.nav .nav-login,.logo-sub{display:none}}
+@media(max-width:1060px){.navlinks a[href="/#how"]{display:none}}
 
 /* ---------- admin ---------- */
 .admin-badge{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-size:.72rem;font-weight:800;letter-spacing:.06em;padding:4px 10px;border-radius:99px;margin-bottom:10px}

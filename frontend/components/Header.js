@@ -26,7 +26,7 @@ export default function Header() {
             </svg>
           </span>
           Med<em>Fund</em>&nbsp;
-          <span style={{ fontSize: ".7rem", fontWeight: 600, color: "var(--muted)" }}>SRI LANKA</span>
+          <span className="logo-sub">SRI LANKA</span>
         </Link>
 
         <nav className="navlinks">
@@ -39,9 +39,9 @@ export default function Header() {
 
         <LanguageSwitcher />
 
-        <Link className="btn btn-ghost nav-login" href="/login">{t("nav_login")}</Link>
-        <Link className="btn btn-blue" href="/register-patient">{t("reg_patient")}</Link>
-        <Link className="btn btn-green" href="/patients">{t("donate_now")}</Link>
+        <Link className="btn btn-soft nav-login" href="/login">{t("nav_login")}</Link>
+        <Link className="btn btn-blue nav-register" href="/register-patient">{t("reg_patient")}</Link>
+        <Link className="btn btn-green nav-donate" href="/patients">{t("donate_now")}</Link>
       </div>
     </header>
   );
