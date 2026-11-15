@@ -116,6 +116,17 @@ export const dictionary = {
   avail: { en: "Available", si: "ලබා ගත හැක", ta: "கிடைக்கிறது" },
   cooldown: { en: "Recently donated", si: "මෑතකදී පරිත්‍යාග කළා", ta: "சமீபத்தில் தானம் செய்தார்" },
   req_contact: { en: "Request contact", si: "සම්බන්ධ වීමට ඉල්ලන්න", ta: "தொடர்பு கோரிக்கை" },
+  
+  menu: { en: "Menu", si: "මෙනුව", ta: "பட்டியல்" },
+  menu_open: { en: "Open menu", si: "මෙනුව විවෘත කරන්න", ta: "பட்டியலைத் திற" },
+  menu_close: { en: "Close menu", si: "මෙනුව වසන්න", ta: "பட்டியலை மூடு" },
+  sec_browse: { en: "Browse", si: "පිරික්සන්න", ta: "உலாவு" },
+  sec_take_part: { en: "Take part", si: "සහභාගී වන්න", ta: "பங்கேற்க" },
+  sec_settings: { en: "Settings", si: "සැකසුම්", ta: "அமைப்புகள்" },
+  language: { en: "Language", si: "භාෂාව", ta: "மொழி" },
+  start_campaign: { en: "Start a campaign", si: "අරමුදල් රැස් කිරීමක් අරඹන්න", ta: "பிரச்சாரம் தொடங்கு" },
+  nav_signup: { en: "Sign up", si: "ලියාපදිංචි වන්න", ta: "பதிவு செய்க" },
+  donate_short: { en: "Donate", si: "පරිත්‍යාග", ta: "நன்கொடை" },
 };
 
 export function translate(key, lang) {
