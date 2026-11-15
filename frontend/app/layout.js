@@ -3,6 +3,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { DonateProvider } from "@/components/DonateProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { themeScript } from "@/lib/theme";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display" });
@@ -16,15 +18,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${sinhala.variable}`}>
+    <html lang="en" data-theme="light" suppressHydrationWarning className={`${display.variable} ${body.variable} ${sinhala.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
-        <LanguageProvider>
-          <DonateProvider>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </DonateProvider>
-        </LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <DonateProvider>
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </DonateProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

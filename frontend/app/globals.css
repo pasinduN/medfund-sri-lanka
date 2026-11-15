@@ -459,3 +459,52 @@ main{animation:fade .35s ease}
 .decision.rejected{background:var(--urgent-soft);color:var(--urgent)}
 .decision.info{background:var(--mist);color:var(--blue)}
 @media(max-width:700px){.admin-stats{grid-template-columns:1fr 1fr}.review{grid-template-columns:1fr}.review .actions{justify-content:flex-start}}
+
+/* ---------- dark mode switch ---------- */
+.switch{width:46px;height:26px;border-radius:99px;background:var(--line);position:relative;flex-shrink:0;transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s}
+.switch.on{background:var(--blue)}
+.switch.on::after{left:23px}
+.tick .amt{white-space:nowrap}
+
+/* ---------- dark mode ---------- */
+[data-theme=dark]{
+  color-scheme:dark;
+  --ink:#E4EEF2;
+  --blue:#4FA3D9;
+  --blue-deep:#2C7DB3;
+  --green:#3CC28C;
+  --green-soft:#123A2C;
+  --paper:#0E1A20;
+  --card:#15252D;
+  --mist:#1F333C;
+  --line:#294049;
+  --muted:#93ABB5;
+  --urgent:#E8735A;
+  --urgent-soft:#3A1F1A;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+[data-theme=dark] header{background:rgba(14,26,32,.92)}
+[data-theme=dark] footer{background:#08121A}
+[data-theme=dark] .btn-green{background:#1F9D6C}
+[data-theme=dark] .btn-green:hover{background:#23B07A}
+[data-theme=dark] .btn-blue,[data-theme=dark] .chip.on{background:#1C6FA3;border-color:#1C6FA3}
+[data-theme=dark] .btn-blue:hover{background:#2580B9}
+[data-theme=dark] .btn-red{background:#C2452D}
+[data-theme=dark] .btn-soft,[data-theme=dark] .reg{color:#CFE3EF}
+[data-theme=dark] .btn-soft:hover{background:var(--line);color:#fff}
+[data-theme=dark] .langs button.on{background:var(--line);color:#fff}
+[data-theme=dark] .modal,[data-theme=dark] .uitem,[data-theme=dark] .field input,[data-theme=dark] .field select,[data-theme=dark] .custom-amt,[data-theme=dark] .urgopt label,[data-theme=dark] .role-pick label,[data-theme=dark] .amount-grid button{background:var(--card);color:var(--ink)}
+[data-theme=dark] .tick+.tick,[data-theme=dark] .comment{border-color:var(--line)}
+[data-theme=dark] .pcard .photo .tag:not(.urgent),[data-theme=dark] .dhero .banner .tag:not(.urgent){background:rgba(14,26,32,.85);color:#fff}
+[data-theme=dark] .ucol.need,[data-theme=dark] .alert.need{background:#2A1814;border-color:#5A2E25}
+[data-theme=dark] .ucol.give,[data-theme=dark] .alert.give{background:#0F2A20;border-color:#1F5A42}
+[data-theme=dark] .mod.blood{background:linear-gradient(135deg,#2A1814,#331B16);border-color:#5A2E25}
+[data-theme=dark] .mod.organ{background:linear-gradient(135deg,#0F2A20,#123326);border-color:#1F5A42}
+[data-theme=dark] .trust-box{background:#0F3550}
+[data-theme=dark] .admin-badge{background:var(--line)}
+[data-theme=dark] .check.warn{background:#3A2E14;color:#E3B55A}
+/* documents stay white "paper" so they still look like real letters */
+[data-theme=dark] .docpaper{color:#10303B}
+[data-theme=dark] .docpaper h4{border-color:#10303B}
+[data-theme=dark] .docpaper .redact{background:#10303B}

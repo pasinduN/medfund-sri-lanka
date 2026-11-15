@@ -127,6 +127,7 @@ export const dictionary = {
   start_campaign: { en: "Start a campaign", si: "අරමුදල් රැස් කිරීමක් අරඹන්න", ta: "பிரச்சாரம் தொடங்கு" },
   nav_signup: { en: "Sign up", si: "ලියාපදිංචි වන්න", ta: "பதிவு செய்க" },
   donate_short: { en: "Donate", si: "පරිත්‍යාග", ta: "நன்கொடை" },
+  dark_mode: { en: "Dark mode", si: "අඳුරු මාදිලිය", ta: "இருண்ட பயன்முறை" },
 };
 
 export function translate(key, lang) {

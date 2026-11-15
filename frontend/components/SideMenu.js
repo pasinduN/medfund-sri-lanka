@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageProvider";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTheme } from "./ThemeProvider";
 
 // Patients and Donor directory are already in the header on big screens,
 // so those two only show in this menu on phones and tablets (mobile-only class)
@@ -37,6 +38,7 @@ function MenuLink({ item, pathname, onNavigate }) {
 export default function SideMenu({ open, onClose }) {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const closeRef = useRef(null);
 
   useEffect(() => {
@@ -79,6 +81,16 @@ export default function SideMenu({ open, onClose }) {
         <div className="dr-row">
           <span>🌐 {t("language")}</span>
           <LanguageSwitcher />
+        </div>
+        <div className="dr-row">
+          <span id="dark-label">🌙 {t("dark_mode")}</span>
+          <button
+            className={`switch ${theme === "dark" ? "on" : ""}`}
+            role="switch"
+            aria-checked={theme === "dark"}
+            aria-labelledby="dark-label"
+            onClick={toggleTheme}
+          />
         </div>
       </aside>
     </>
