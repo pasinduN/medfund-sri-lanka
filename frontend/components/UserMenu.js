@@ -51,6 +51,7 @@ export default function UserMenu() {
               <span className={`role-tag ${user.role}`}>{t(`role_${user.role}`)}</span>
             </div>
           </div>
+          <Link role="menuitem" href="/profile" onClick={() => setOpen(false)}>👤 {t("my_profile")}</Link>
           {user.role === "admin" && (
             <Link role="menuitem" href="/admin" onClick={() => setOpen(false)}>🛡️ {t("admin_review")}</Link>
           )}

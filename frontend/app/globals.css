@@ -542,3 +542,50 @@ main{animation:fade .35s ease}
 .dr-user{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--mist);border-radius:14px;padding:10px}
 .dr-user b{display:block;font-size:.9rem}
 .dr-user .btn{padding:8px 12px;font-size:.8rem}
+
+/* ---------- my profile ---------- */
+.profile{max-width:920px;display:grid;gap:18px}
+.profile-loading{min-height:120px}
+.profile-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.profile-head>div{flex:1;min-width:180px}
+.profile-head h2{font-size:1.5rem}
+.empty-state{text-align:center;display:grid;justify-items:center;gap:8px;padding:34px 26px}
+.empty-state .glyph{font-size:2rem}
+.empty-state .btn{margin-top:6px}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.profile-grid .history{grid-column:1/-1}
+.muted-sm{font-size:.82rem !important;color:var(--muted)}
+.dc-top{display:flex;align-items:center;gap:14px}
+.dc-top>div{flex:1}
+.dc-top h3{margin-bottom:2px}
+.bgroup{width:60px;height:60px;border-radius:16px;background:var(--urgent-soft);color:var(--urgent);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.35rem;flex-shrink:0}
+.status-pill{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:99px;background:var(--green-soft);color:var(--green);white-space:nowrap}
+.status-pill.paused{background:#FFF1E0;color:#B8860B}
+.pledges{margin:14px 0 0;font-size:.9rem}
+.donor-card .form-info{margin-top:12px}
+.dc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn-line-red{background:transparent;border:1.5px solid var(--urgent);color:var(--urgent)}
+.btn-line-red:hover{background:var(--urgent-soft)}
+.eligibility .big{font-weight:800;color:var(--ink) !important;font-size:1.05rem !important;margin:6px 0 4px}
+.eligibility.ok{border-color:var(--green)}
+.wait-bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;margin:10px 0}
+.wait-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:99px}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.tier{border:1.5px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;opacity:.45}
+.tier.got{opacity:1;border-color:var(--green);background:var(--green-soft)}
+.tier span{font-size:1.5rem;display:block}
+.tier b{display:block;font-size:.85rem}
+.tier small{font-size:.7rem;color:var(--muted)}
+.hist-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.hist{list-style:none;display:grid}
+.hist li{display:flex;gap:12px;align-items:center;padding:11px 4px;border-top:1px solid var(--line)}
+.hist li b{display:block;font-size:.92rem}
+.hist li small{color:var(--muted);font-size:.8rem}
+.hico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--urgent-soft);flex-shrink:0}
+.hico.organ,.hico.pledge{background:var(--green-soft)}
+.logform{background:var(--mist);border-radius:16px;padding:16px;margin-bottom:12px}
+.logform .full{grid-column:1/-1}
+.form-actions{display:flex;gap:10px}
+.dialog-actions{display:grid;gap:8px}
+@media(max-width:760px){.profile-grid{grid-template-columns:1fr}.profile-grid .history{grid-column:auto}}
+[data-theme=dark] .status-pill.paused{background:#3A2E14;color:#E3B55A}

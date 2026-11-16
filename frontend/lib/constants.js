@@ -6,3 +6,5 @@ export const DISTRICTS = [
 ];
 
 export const BLOOD_GROUPS = ["A+", "A−", "B+", "B−", "O+", "O−", "AB+", "AB−"];
+
+export const ORGANS = ["Kidney", "Liver", "Eyes (cornea)", "Bone marrow", "Any — after life"];

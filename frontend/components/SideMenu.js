@@ -95,6 +95,10 @@ export default function SideMenu({ open, onClose }) {
         {BROWSE.map((item) => (
           <MenuLink key={item.href} item={item} pathname={pathname} onNavigate={onClose} />
         ))}
+        
+        {user && (
+          <MenuLink item={{ href: "/profile", key: "my_profile", icon: "👤" }} pathname={pathname} onNavigate={onClose} />
+        )}
         {user?.role === "admin" && (
           <MenuLink item={{ href: "/admin", key: "admin_review", icon: "🛡️" }} pathname={pathname} onNavigate={onClose} />
         )}
