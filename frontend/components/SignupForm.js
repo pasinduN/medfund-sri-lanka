@@ -2,41 +2,66 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "./LanguageProvider";
+import { useAuth } from "./AuthProvider";
+import { DEMO_OTP, register } from "@/lib/demoAuth";
 
 const ROLES = [
-  { value: "donor", label: "🤝 Donor", hint: "Give money, blood or a pledge" },
-  { value: "patient", label: "🏥 Patient / family", hint: "Start a campaign for treatment" },
+  { value: "donor", icon: "🤝", label: "role_donor", hint: "role_donor_hint" },
+  { value: "patient", icon: "🏥", label: "role_patient_pick", hint: "role_patient_hint" },
 ];
 
 export default function SignupForm() {
+  const { t } = useLanguage();
+  const { logIn } = useAuth();
   const [error, setError] = useState("");
-  const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [account, setAccount] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
 
     if (form.get("password").length < 8) {
-      setError("Password must be at least 8 characters.");
+      setError(t("err_pw_short"));
       return;
     }
     if (form.get("password") !== form.get("confirm")) {
-      setError("Passwords don't match.");
+      setError(t("err_pw_match"));
       return;
     }
 
     setError("");
-    // TODO: POST /api/auth/register once the backend is ready
-    setDone(true);
+    setBusy(true);
+    try {
+      const created = await register({
+        name: form.get("fullName"),
+        email: form.get("email"),
+        phone: form.get("phone"),
+        role: form.get("role"),
+      });
+      logIn(created);
+      setAccount(created);
+    } catch (err) {
+      setError(t(err.message));
+    } finally {
+      setBusy(false);
+    }
   };
 
-  if (done) {
+  if (account) {
+    const isDonor = account.role === "donor";
     return (
       <div className="success">
         <div className="ring">✓</div>
-        <h3>Account created</h3>
-        <p>This is a preview — accounts will be saved once the backend is connected.</p>
-        <Link className="btn btn-blue" href="/login">Go to log in</Link>
+        <h3>{t("signup_done").replace("{name}", account.name.split(" ")[0])}</h3>
+        <p>{t("signup_done_note").replace("{otp}", DEMO_OTP)}</p>
+        <div className="success-actions">
+          <Link className="btn btn-green" href={isDonor ? "/register-donor" : "/register-patient"}>
+            {t(isDonor ? "nav_regdonor" : "start_campaign")}
+          </Link>
+          <Link className="btn btn-soft" href="/">{t("go_home")}</Link>
+        </div>
       </div>
     );
   }
@@ -44,29 +69,31 @@ export default function SignupForm() {
   return (
     <form onSubmit={handleSubmit} className="formgrid">
       <div className="field">
-        <label>I want to join as</label>
+        <label>{t("join_as")}</label>
         <div className="role-pick">
           {ROLES.map((r) => (
             <label key={r.value}>
               <input type="radio" name="role" value={r.value} defaultChecked={r.value === "donor"} />
-              {r.label}
-              <span>{r.hint}</span>
+              {r.icon} {t(r.label)}
+              <span>{t(r.hint)}</span>
             </label>
           ))}
         </div>
       </div>
-      <div className="field"><label>Full name</label><input name="fullName" required autoComplete="name" placeholder="Your name" /></div>
-      <div className="field"><label>Email</label><input name="email" type="email" required autoComplete="email" placeholder="name@email.com" /></div>
-      <div className="field"><label>Phone</label><input name="phone" type="tel" required autoComplete="tel" placeholder="07X XXX XXXX" /></div>
-      <div className="field"><label>Password</label><input name="password" type="password" required autoComplete="new-password" placeholder="At least 8 characters" /></div>
-      <div className="field"><label>Confirm password</label><input name="confirm" type="password" required autoComplete="new-password" placeholder="Type it again" /></div>
+      <div className="field"><label htmlFor="fullName">{t("full_name")}</label><input id="fullName" name="fullName" required autoComplete="name" placeholder={t("name_ph")} /></div>
+      <div className="field"><label htmlFor="email">{t("email")}</label><input id="email" name="email" type="email" required autoComplete="email" placeholder="name@email.com" /></div>
+      <div className="field"><label htmlFor="phone">{t("phone")}</label><input id="phone" name="phone" type="tel" inputMode="tel" required autoComplete="tel" placeholder="07X XXX XXXX" /></div>
+      <div className="field"><label htmlFor="password">{t("password")}</label><input id="password" name="password" type="password" required autoComplete="new-password" placeholder={t("pw_ph")} /></div>
+      <div className="field"><label htmlFor="confirm">{t("confirm_pw")}</label><input id="confirm" name="confirm" type="password" required autoComplete="new-password" /></div>
 
-      {error && <div className="form-error">{error}</div>}
+      {error && <div className="form-error" role="alert">{error}</div>}
 
-      <button type="submit" className="btn btn-green btn-big">Create account</button>
+      <button type="submit" className="btn btn-green btn-big" disabled={busy}>
+        {busy ? t("please_wait") : t("create_account")}
+      </button>
 
       <div className="auth-links">
-        <span>Already have an account? <Link href="/login">Log in</Link></span>
+        <span>{t("have_account")} <Link href="/login">{t("nav_login")}</Link></span>
       </div>
     </form>
   );

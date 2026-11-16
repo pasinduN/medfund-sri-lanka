@@ -2,10 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "./LanguageProvider";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTheme } from "./ThemeProvider";
+import { useAuth } from "./AuthProvider";
+import { initials } from "@/lib/format";
 
 // Patients and Donor directory are already in the header on big screens,
 // so those two only show in this menu on phones and tablets (mobile-only class)
@@ -39,6 +41,8 @@ export default function SideMenu({ open, onClose }) {
   const pathname = usePathname();
   const { t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const { user, logOut } = useAuth();
+  const router = useRouter();
   const closeRef = useRef(null);
 
   useEffect(() => {
@@ -62,15 +66,38 @@ export default function SideMenu({ open, onClose }) {
           <button ref={closeRef} className="dr-close" onClick={onClose} aria-label={t("menu_close")}>✕</button>
         </div>
 
-        <div className="dr-auth">
-          <Link className="btn btn-blue" href="/login" onClick={onClose}>{t("nav_login")}</Link>
-          <Link className="btn btn-soft" href="/signup" onClick={onClose}>{t("nav_signup")}</Link>
-        </div>
+        {user ? (
+          <div className="dr-user">
+            <span className="avatar">{initials(user.name)}</span>
+            <div>
+              <b>{user.name}</b>
+              <span className={`role-tag ${user.role}`}>{t(`role_${user.role}`)}</span>
+            </div>
+            <button
+              className="btn btn-soft"
+              onClick={() => {
+                onClose();
+                logOut();
+                router.push("/");
+              }}
+            >
+              {t("log_out")}
+            </button>
+          </div>
+        ) : (
+          <div className="dr-auth">
+            <Link className="btn btn-blue" href="/login" onClick={onClose}>{t("nav_login")}</Link>
+            <Link className="btn btn-soft" href="/signup" onClick={onClose}>{t("nav_signup")}</Link>
+          </div>
+        )}
 
         <p className="dr-sec">{t("sec_browse")}</p>
         {BROWSE.map((item) => (
           <MenuLink key={item.href} item={item} pathname={pathname} onNavigate={onClose} />
         ))}
+        {user?.role === "admin" && (
+          <MenuLink item={{ href: "/admin", key: "admin_review", icon: "🛡️" }} pathname={pathname} onNavigate={onClose} />
+        )}
 
         <p className="dr-sec">{t("sec_take_part")}</p>
         {TAKE_PART.map((item) => (

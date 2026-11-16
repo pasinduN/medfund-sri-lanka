@@ -4,8 +4,10 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageProvider";
+import { useAuth } from "./AuthProvider";
 import LanguageMenu from "./LanguageMenu";
 import SideMenu from "./SideMenu";
+import UserMenu from "./UserMenu";
 
 const links = [
   { href: "/patients", key: "nav_patients" },
@@ -15,6 +17,7 @@ const links = [
 export default function Header() {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const { user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -46,7 +49,11 @@ export default function Header() {
 
           <span className="nav-push" />
           <LanguageMenu />
-          <Link className="btn btn-soft nav-login" href="/login">{t("nav_login")}</Link>
+          {user ? (
+            <UserMenu />
+          ) : (
+            <Link className="btn btn-soft nav-login" href="/login">{t("nav_login")}</Link>
+          )}
           {showRegister && (
             <Link className="btn btn-blue nav-register" href="/register-patient">{t("reg_patient")}</Link>
           )}

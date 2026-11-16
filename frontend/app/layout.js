@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { DonateProvider } from "@/components/DonateProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AuthProvider } from "@/components/AuthProvider";
 import { themeScript } from "@/lib/theme";
 import "./globals.css";
 
@@ -25,11 +26,13 @@ export default function RootLayout({ children }) {
       <body>
         <ThemeProvider>
           <LanguageProvider>
-            <DonateProvider>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-            </DonateProvider>
+            <AuthProvider>
+              <DonateProvider>
+                <Header />
+                <main>{children}</main>
+                <Footer />
+              </DonateProvider>
+            </AuthProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

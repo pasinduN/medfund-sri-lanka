@@ -6,3 +6,7 @@ export const percentRaised = (p) => Math.min(100, (p.got / p.need) * 100);
 
 export const patientGradient = (id) =>
   `linear-gradient(135deg, ${colors[id % colors.length]}, ${colors[(id + 3) % colors.length]})`;
+
+// "Kamal Rathnayake" -> "KR"
+export const initials = (name) =>
+  name.split(" ").filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join("");
