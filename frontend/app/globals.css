@@ -628,3 +628,14 @@ main{animation:fade .35s ease}
 .dr-count{margin-left:auto;background:var(--urgent);color:#fff;font-size:.7rem;font-weight:800;border-radius:99px;padding:2px 8px}
 /* on phones the profile and log out live in the ☰ menu, which leaves room for the bell */
 @media(max-width:600px){.nav .usermenu{display:none}.notepop{position:fixed;top:66px;left:12px;right:12px;width:auto}}
+
+/* ---------- home summary strip (logged in only) ---------- */
+.summary{padding-top:18px}
+.sum-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 14px 12px 18px;box-shadow:0 4px 14px rgba(16,48,59,.06)}
+.sum-hi{font-family:var(--display);font-size:1.02rem;white-space:nowrap}
+.sum-chips{display:flex;flex-wrap:wrap;gap:8px;flex:1}
+.sum-chip{background:var(--mist);border-radius:99px;padding:6px 12px;font-size:.82rem;font-weight:600;color:var(--ink)}
+.sum-chip.link:hover{background:var(--line)}
+.sum-btn{padding:8px 14px;font-size:.84rem}
+.summary+.hero{padding-top:36px}
+@media(max-width:600px){.sum-hi,.sum-chips,.sum-btn{flex-basis:100%}.sum-btn{justify-content:center}}

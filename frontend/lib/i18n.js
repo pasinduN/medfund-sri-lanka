@@ -325,6 +325,12 @@ export const dictionary = {
   note_admin_closed: { en: "MedFund closed your campaign: {reason}.", si: "MedFund ඔබේ අරමුදල් රැස් කිරීම වසා දැමුවා: {reason}.", ta: "MedFund உங்கள் பிரச்சாரத்தை மூடியது: {reason}." },
   note_new_application: { en: "New patient application from {name} is waiting for review.", si: "{name} ගෙන් නව රෝගී අයදුම්පතක් සමාලෝචනය සඳහා බලා සිටී.", ta: "{name} இடமிருந்து புதிய நோயாளர் விண்ணப்பம் மதிப்பாய்வுக்குக் காத்திருக்கிறது." },
   note_close_request_admin: { en: "{name} asked to close their campaign.", si: "{name} තම අරමුදල් රැස් කිරීම වසා දැමීමට ඉල්ලා ඇත.", ta: "{name} தங்கள் பிரச்சாரத்தை மூடக் கோரியுள்ளார்." },
+  
+  hi_name: { en: "Hi, {name} 👋", si: "ආයුබෝවන්, {name} 👋", ta: "வணக்கம், {name} 👋" },
+  sum_next_blood: { en: "Next blood donation: {date}", si: "ඊළඟ රුධිර පරිත්‍යාගය: {date}", ta: "அடுத்த இரத்த தானம்: {date}" },
+  sum_badge: { en: "{tier} badge", si: "{tier} ලාංඡනය", ta: "{tier} பதக்கம்" },
+  sum_raised: { en: "{pct}% of your goal raised", si: "ඉලක්කයෙන් {pct}%ක් රැස් වී ඇත", ta: "இலக்கின் {pct}% திரட்டப்பட்டது" },
+  sum_unread: { en: "{n} unread", si: "නව දැනුම්දීම් {n}ක්", ta: "{n} புதிய அறிவிப்புகள்" },
 };
 
 export function translate(key, lang) {

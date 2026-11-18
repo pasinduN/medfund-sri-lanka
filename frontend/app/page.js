@@ -4,6 +4,7 @@ import UrgentBoard from "@/components/UrgentBoard";
 import PatientCard from "@/components/PatientCard";
 import DonorSignup from "@/components/DonorSignup";
 import T from "@/components/T";
+import HomeSummary from "@/components/HomeSummary";
 import { getPatients, getFeaturedPatients, getUrgentBoard } from "@/lib/api";
 
 const STEPS = ["s1", "s2", "s3", "s4"];
@@ -20,6 +21,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <HomeSummary />
       <section className="hero">
         <div className="wrap">
           <div>
