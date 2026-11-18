@@ -8,6 +8,7 @@ import { useAuth } from "./AuthProvider";
 import LanguageMenu from "./LanguageMenu";
 import SideMenu from "./SideMenu";
 import UserMenu from "./UserMenu";
+import NotificationBell from "./NotificationBell";
 
 const links = [
   { href: "/patients", key: "nav_patients" },
@@ -50,7 +51,10 @@ export default function Header() {
           <span className="nav-push" />
           <LanguageMenu />
           {user ? (
-            <UserMenu />
+            <>
+              <NotificationBell />
+              <UserMenu />
+            </>
           ) : (
             <Link className="btn btn-soft nav-login" href="/login">{t("nav_login")}</Link>
           )}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "./LanguageProvider";
 import { useAuth } from "./AuthProvider";
 import { DEMO_OTP, register } from "@/lib/demoAuth";
+import { notify } from "@/lib/notificationStore";
 
 const ROLES = [
   { value: "donor", icon: "🤝", label: "role_donor", hint: "role_donor_hint" },
@@ -41,6 +42,7 @@ export default function SignupForm() {
         role: form.get("role"),
       });
       logIn(created);
+      notify(created.id, "welcome");
       setAccount(created);
     } catch (err) {
       setError(t(err.message));

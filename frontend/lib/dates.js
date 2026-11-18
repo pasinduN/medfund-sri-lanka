@@ -26,3 +26,16 @@ const LOCALES = { en: "en-GB", si: "si-LK", ta: "ta-LK" };
 export function formatDate(iso, lang = "en") {
   return parseDate(iso).toLocaleDateString(LOCALES[lang] ?? "en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
+
+// "5 minutes ago", "yesterday" — older than a week shows the date instead
+export function timeAgo(dateTime, lang = "en") {
+  const seconds = Math.round((new Date(dateTime) - Date.now()) / 1000);
+  const abs = Math.abs(seconds);
+  const rtf = new Intl.RelativeTimeFormat(LOCALES[lang] ?? "en-GB", { numeric: "auto" });
+
+  if (abs < 60) return rtf.format(0, "second");
+  if (abs < 3600) return rtf.format(Math.round(seconds / 60), "minute");
+  if (abs < 86400) return rtf.format(Math.round(seconds / 3600), "hour");
+  if (abs < 7 * 86400) return rtf.format(Math.round(seconds / 86400), "day");
+  return formatDate(toISO(new Date(dateTime)), lang);
+}

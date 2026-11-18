@@ -8,6 +8,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { useTheme } from "./ThemeProvider";
 import { useAuth } from "./AuthProvider";
 import { initials } from "@/lib/format";
+import { useNotifications } from "@/lib/notificationStore";
 
 // Patients and Donor directory are already in the header on big screens,
 // so those two only show in this menu on phones and tablets (mobile-only class)
@@ -33,6 +34,7 @@ function MenuLink({ item, pathname, onNavigate }) {
     >
       <span className="ico" aria-hidden="true">{item.icon}</span>
       {t(item.key)}
+      {item.count > 0 && <span className="dr-count">{item.count}</span>}
     </Link>
   );
 }
@@ -42,6 +44,7 @@ export default function SideMenu({ open, onClose }) {
   const { t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { user, logOut } = useAuth();
+    const { unread } = useNotifications(user?.id);
   const router = useRouter();
   const closeRef = useRef(null);
 
@@ -95,9 +98,12 @@ export default function SideMenu({ open, onClose }) {
         {BROWSE.map((item) => (
           <MenuLink key={item.href} item={item} pathname={pathname} onNavigate={onClose} />
         ))}
-        
+
         {user && (
-          <MenuLink item={{ href: "/profile", key: "my_profile", icon: "👤" }} pathname={pathname} onNavigate={onClose} />
+          <>
+            <MenuLink item={{ href: "/profile", key: "my_profile", icon: "👤" }} pathname={pathname} onNavigate={onClose} />
+            <MenuLink item={{ href: "/notifications", key: "notifications", icon: "🔔", count: unread }} pathname={pathname} onNavigate={onClose} />
+          </>
         )}
         {user?.role === "admin" && (
           <MenuLink item={{ href: "/admin", key: "admin_review", icon: "🛡️" }} pathname={pathname} onNavigate={onClose} />

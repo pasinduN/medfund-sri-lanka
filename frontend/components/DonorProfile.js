@@ -8,6 +8,7 @@ import UnregisterDialog from "./UnregisterDialog";
 import { bloodEligibility, rewardStatus, useDonorRecord } from "@/lib/donorStore";
 import { DONOR_SETTINGS, REWARD_TIERS } from "@/lib/settings";
 import { addDays, formatDate } from "@/lib/dates";
+import { notify } from "@/lib/notificationStore";
 
 const HISTORY_ICONS = { blood: "🩸", organ: "🫀", pledge: "📜" };
 
@@ -39,6 +40,19 @@ export default function DonorProfile({ user, hideWhenEmpty = false }) {
     ...record.donations.map((d) => ({ ...d, kind: d.type })),
     ...record.pledges.map((p) => ({ id: `pledge-${p.organ}`, kind: "pledge", date: p.date, organ: p.organ })),
   ].sort((a, b) => b.date.localeCompare(a.date));
+
+    const saveDonation = (next) => {
+    save(next);
+    setLogging(false);
+
+    const after = bloodEligibility(next);
+    const justGaveBlood = next.donations.at(-1).type === "blood" && !after.canDonate;
+    if (justGaveBlood) notify(user.id, "donation_logged_blood", { next: after.nextDate });
+    else notify(user.id, "donation_logged");
+
+    const newTier = rewardStatus(next).tier;
+    if (newTier && newTier.key !== reward.tier?.key) notify(user.id, "reward_tier", { tier: newTier.key });
+  };
 
   const historyTitle = (h) => {
     if (h.kind === "blood") return t("hist_blood");
@@ -133,10 +147,7 @@ export default function DonorProfile({ user, hideWhenEmpty = false }) {
         {logging && (
           <LogDonationForm
             record={record}
-            onSave={(next) => {
-              save(next);
-              setLogging(false);
-            }}
+            onSave={saveDonation}
             onCancel={() => setLogging(false)}
           />
         )}

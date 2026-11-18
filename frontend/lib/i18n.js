@@ -303,6 +303,28 @@ export const dictionary = {
   step_ai: { en: "AI document check", si: "AI ලේඛන පරීක්ෂාව", ta: "AI ஆவண சோதனை" },
   step_admin: { en: "Admin review", si: "පරිපාලක සමාලෝචනය", ta: "நிர்வாக மதிப்பாய்வு" },
   step_live: { en: "Goes live", si: "සජීවී වේ", ta: "நேரலைக்கு வரும்" },
+  
+  notifications: { en: "Notifications", si: "දැනුම්දීම්", ta: "அறிவிப்புகள்" },
+  notes_unread: { en: "Notifications, {n} unread", si: "දැනුම්දීම්, නොකියවූ {n}ක්", ta: "அறிவிப்புகள், படிக்காதவை {n}" },
+  mark_all_read: { en: "Mark all as read", si: "සියල්ල කියවූ ලෙස සලකුණු කරන්න", ta: "அனைத்தையும் படித்ததாகக் குறி" },
+  see_all: { en: "See all", si: "සියල්ල බලන්න", ta: "அனைத்தையும் காண்க" },
+  notes_empty: { en: "You're all caught up.", si: "අලුත් දැනුම්දීම් නැත.", ta: "புதிய அறிவிப்புகள் இல்லை." },
+  notes_login_h: { en: "Log in to see your notifications", si: "ඔබේ දැනුම්දීම් බැලීමට පිවිසෙන්න", ta: "உங்கள் அறிவிப்புகளைக் காண உள்நுழையுங்கள்" },
+  note_welcome: { en: "Welcome to MedFund! Your account is ready.", si: "MedFund වෙත සාදරයෙන් පිළිගනිමු! ඔබේ ගිණුම සූදානම්.", ta: "MedFund க்கு வரவேற்கிறோம்! உங்கள் கணக்கு தயார்." },
+  note_blood_request: { en: "Urgent: {group} blood is needed at {hospital}. Can you help?", si: "හදිසියි: {hospital} රෝහලට {group} රුධිරය අවශ්‍යයි. ඔබට උදව් කළ හැකිද?", ta: "அவசரம்: {hospital} இல் {group} இரத்தம் தேவை. உதவ முடியுமா?" },
+  note_reward_tier: { en: "You earned the {tier} badge. Thank you!", si: "ඔබට {tier} ලාංඡනය ලැබුණා. ස්තූතියි!", ta: "நீங்கள் {tier} பதக்கத்தைப் பெற்றீர்கள். நன்றி!" },
+  note_donation_logged: { en: "Your donation is saved. Thank you!", si: "ඔබේ පරිත්‍යාගය සටහන් විය. ස්තූතියි!", ta: "உங்கள் தானம் பதிவு செய்யப்பட்டது. நன்றி!" },
+  note_donation_logged_blood: { en: "Thank you for giving blood! You can give again on {next}.", si: "රුධිරය දුන්නාට ස්තූතියි! ඔබට නැවත {next} දින දිය හැක.", ta: "இரத்தம் கொடுத்ததற்கு நன்றி! {next} அன்று மீண்டும் கொடுக்கலாம்." },
+  note_donation_received: { en: "{name} donated {amount} to your campaign.", si: "{name} ඔබේ අරමුදල් රැස් කිරීමට {amount}ක් පරිත්‍යාග කළා.", ta: "{name} உங்கள் பிரச்சாரத்திற்கு {amount} நன்கொடை அளித்தார்." },
+  note_milestone: { en: "Your campaign reached {pct}% of its goal.", si: "ඔබේ අරමුදල් රැස් කිරීම ඉලක්කයෙන් {pct}%කට ළඟා විය.", ta: "உங்கள் பிரச்சாரம் இலக்கின் {pct}% ஐ எட்டியது." },
+  note_campaign_live: { en: "Your campaign is verified and live.", si: "ඔබේ අරමුදල් රැස් කිරීම සත්‍යාපනය වී සජීවී විය.", ta: "உங்கள் பிரச்சாரம் சரிபார்க்கப்பட்டு நேரலையில் உள்ளது." },
+  note_close_sent: { en: "We received your close request. A reviewer will reply within 2 working days.", si: "ඔබේ වසා දැමීමේ ඉල්ලීම ලැබුණා. වැඩ කරන දින 2ක් ඇතුළත පිළිතුරක් ලැබේ.", ta: "உங்கள் மூடும் கோரிக்கை கிடைத்தது. 2 வேலை நாட்களில் பதில் கிடைக்கும்." },
+  note_goal_reached: { en: "Goal reached! Your campaign closed and moved to past campaigns.", si: "ඉලක්කය සපුරා ගත්තා! ඔබේ අරමුදල් රැස් කිරීම වැසී පැරණි අරමුදල් රැස් කිරීම් අතරට එකතු විය.", ta: "இலக்கு அடைந்தது! உங்கள் பிரச்சாரம் மூடப்பட்டு கடந்த பிரச்சாரங்களுக்குச் சென்றது." },
+  note_admin_paused: { en: "MedFund paused donations to your campaign: {reason}.", si: "MedFund ඔබේ අරමුදල් රැස් කිරීමට පරිත්‍යාග තාවකාලිකව නැවැත්තුවා: {reason}.", ta: "MedFund உங்கள் பிரச்சாரத்திற்கான நன்கொடைகளை இடைநிறுத்தியது: {reason}." },
+  note_admin_resumed: { en: "Donations to your campaign are open again.", si: "ඔබේ අරමුදල් රැස් කිරීමට නැවත පරිත්‍යාග කළ හැක.", ta: "உங்கள் பிரச்சாரத்திற்கு மீண்டும் நன்கொடை அளிக்கலாம்." },
+  note_admin_closed: { en: "MedFund closed your campaign: {reason}.", si: "MedFund ඔබේ අරමුදල් රැස් කිරීම වසා දැමුවා: {reason}.", ta: "MedFund உங்கள் பிரச்சாரத்தை மூடியது: {reason}." },
+  note_new_application: { en: "New patient application from {name} is waiting for review.", si: "{name} ගෙන් නව රෝගී අයදුම්පතක් සමාලෝචනය සඳහා බලා සිටී.", ta: "{name} இடமிருந்து புதிய நோயாளர் விண்ணப்பம் மதிப்பாய்வுக்குக் காத்திருக்கிறது." },
+  note_close_request_admin: { en: "{name} asked to close their campaign.", si: "{name} තම අරමුදල් රැස් කිරීම වසා දැමීමට ඉල්ලා ඇත.", ta: "{name} தங்கள் பிரச்சாரத்தை மூடக் கோரியுள்ளார்." },
 };
 
 export function translate(key, lang) {

@@ -436,7 +436,7 @@ main{animation:fade .35s ease}
   .nav .logo .pulse{width:30px;height:30px;border-radius:10px}
   .langbtn{padding:7px 8px;gap:4px}
 }
-@media(max-width:380px){.langbtn span{display:none}.nav .usermenu{display:none}}
+@media(max-width:380px){.langbtn span{display:none}.nav{gap:4px}.nav .iconbtn{width:36px;height:36px}}
 @media(prefers-reduced-motion:reduce){.drawer,.scrim{transition:none}}
 
 /* ---------- admin ---------- */
@@ -606,3 +606,25 @@ main{animation:fade .35s ease}
 .steps li.now{color:#B8860B;border-color:#E3B55A}
 .hist li>div{flex:1;min-width:0}
 @media(max-width:600px){.steps{grid-template-columns:1fr 1fr}.hist li{flex-wrap:wrap}.hist li>div{flex-basis:calc(100% - 60px)}.hist li .status-pill{margin-left:50px}}
+
+/* ---------- notifications ---------- */
+.bell{position:relative}
+.bellbtn{position:relative;font-size:1.05rem}
+.badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--urgent);color:#fff;font-size:.66rem;font-weight:800;display:grid;place-items:center;border:2px solid var(--paper)}
+.notepop{position:absolute;right:-50px;top:calc(100% + 8px);width:min(360px,calc(100vw - 24px));background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 40px rgba(16,48,59,.18);padding:8px;z-index:60}
+.notepop-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px 10px;border-bottom:1px solid var(--line)}
+.notepop-head .linkbtn{font-size:.8rem}
+.notepop-all{display:block;text-align:center;padding:10px;font-weight:700;font-size:.86rem;color:var(--blue);border-top:1px solid var(--line);margin-top:4px}
+.notes{list-style:none;display:grid}
+.notes a{display:flex;gap:12px;align-items:flex-start;padding:11px 10px;border-radius:12px;color:var(--ink);font-size:.88rem;line-height:1.4;position:relative}
+.notes a:hover{background:var(--mist)}
+.notes a.unread{background:var(--green-soft)}
+.notes a.unread::after{content:"";position:absolute;right:10px;top:16px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.notes a.unread .note-tx{padding-right:16px;font-weight:600}
+.note-ico{width:34px;height:34px;border-radius:10px;background:var(--mist);display:grid;place-items:center;flex-shrink:0}
+.note-tx small{display:block;color:var(--muted);font-size:.75rem;font-weight:500;margin-top:2px}
+.notes-empty{text-align:center;padding:22px 10px;color:var(--muted);font-size:.9rem}
+.panel .notes{margin-top:8px}
+.dr-count{margin-left:auto;background:var(--urgent);color:#fff;font-size:.7rem;font-weight:800;border-radius:99px;padding:2px 8px}
+/* on phones the profile and log out live in the ☰ menu, which leaves room for the bell */
+@media(max-width:600px){.nav .usermenu{display:none}.notepop{position:fixed;top:66px;left:12px;right:12px;width:auto}}

@@ -9,6 +9,7 @@ import { getPatient } from "@/lib/api";
 import { closeCampaign, raisedSoFar, useCampaignRecord } from "@/lib/campaignStore";
 import { formatDate, todayISO } from "@/lib/dates";
 import { formatRs } from "@/lib/format";
+import { notify, notifyAdmins } from "@/lib/notificationStore";
 
 const REVIEW_STEPS = ["step_submitted", "step_ai", "step_admin", "step_live"];
 
@@ -30,8 +31,10 @@ export default function PatientProfile({ user }) {
 
   // A fully funded campaign closes itself and moves to history — nobody has to press anything
   useEffect(() => {
-    if (goalReached) save(closeCampaign(record, patient, "goal"));
-  }, [goalReached, record, patient, save]);
+    if (!goalReached) return;
+    save(closeCampaign(record, patient, "goal"));
+    notify(user.id, "goal_reached");
+  }, [goalReached, record, patient, save, user.id]);
 
   const date = (iso) => formatDate(iso, lang);
 
@@ -48,6 +51,8 @@ export default function PatientProfile({ user }) {
 
   const sendRequest = ({ reason, note }) => {
     save({ ...record, campaign: { ...campaign, status: "close_requested", request: { reason, note, date: todayISO() } } });
+    notify(user.id, "close_sent");
+    notifyAdmins("close_request_admin", { name: user.name });
     setAsking(false);
   };
   const withdrawRequest = () => save({ ...record, campaign: { ...campaign, status: "live", request: undefined } });
