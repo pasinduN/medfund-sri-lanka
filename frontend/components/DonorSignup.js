@@ -7,6 +7,7 @@ import { useLanguage } from "./LanguageProvider";
 import { useAuth } from "./AuthProvider";
 import { emptyDonor, useDonorRecord } from "@/lib/donorStore";
 import { todayISO } from "@/lib/dates";
+import { notifyAdmins } from "@/lib/notificationStore";
 
 function Result({ status, savedKey }) {
   const { t } = useLanguage();
@@ -43,6 +44,7 @@ export default function DonorSignup() {
       district: form.get("district"),
       urgent: form.get("urgency") === "urgent",
     });
+    if (!record) notifyAdmins("new_donor", { name: user.name });
     setBloodResult("saved");
   };
 
@@ -64,6 +66,7 @@ export default function DonorSignup() {
         { organ, date: todayISO(), urgent: form.get("urgency") === "urgent" },
       ],
     });
+    if (!record) notifyAdmins("new_donor", { name: user.name });
     setOrganResult("saved");
   };
 

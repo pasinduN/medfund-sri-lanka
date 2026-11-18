@@ -639,3 +639,17 @@ main{animation:fade .35s ease}
 .sum-btn{padding:8px 14px;font-size:.84rem}
 .summary+.hero{padding-top:36px}
 @media(max-width:600px){.sum-hi,.sum-chips,.sum-btn{flex-basis:100%}.sum-btn{justify-content:center}}
+
+/* ---------- admin review + campaign holds ---------- */
+.admin-tabs{max-width:420px;margin-bottom:8px}
+.admin-tabs .dr-count{margin-left:6px}
+.admin-empty{margin:-6px 0 18px}
+.admin-progress{max-width:320px;margin-top:8px}
+.review .pname .status-pill{margin-left:8px;vertical-align:middle}
+.hold-info{background:#FFF1E0;color:#8A6408}
+[data-theme=dark] .hold-info{background:#3A2E14;color:#E3B55A}
+.hold-banner{display:grid;gap:2px;background:#FFF1E0;color:#8A6408;border-radius:14px;padding:12px 14px;margin:14px 0 4px;font-size:.88rem}
+.hold-banner.closed{background:var(--urgent-soft);color:var(--urgent)}
+[data-theme=dark] .hold-banner{background:#3A2E14;color:#E3B55A}
+[data-theme=dark] .hold-banner.closed{background:var(--urgent-soft);color:var(--urgent)}
+.ring.hold{background:#FFF1E0;color:#B8860B}

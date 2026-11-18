@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { formatRs } from "@/lib/format";
+import { useHolds } from "@/lib/moderationStore";
+import { useLanguage } from "./LanguageProvider";
 
 const DonateContext = createContext(null);
 
@@ -15,6 +17,9 @@ export function DonateProvider({ children }) {
   const [patient, setPatient] = useState(null);
   const [amount, setAmount] = useState(5000);
   const [done, setDone] = useState(false);
+  const holds = useHolds();
+  const { t } = useLanguage();
+  const hold = patient ? holds[patient.id] : null;
 
   const openDonate = (p) => {
     setPatient(p);
@@ -36,7 +41,14 @@ export function DonateProvider({ children }) {
       <div className={`overlay ${patient ? "on" : ""}`} onClick={(e) => e.target === e.currentTarget && close()}>
         {patient && (
           <div className="modal">
-            {done ? (
+            {hold ? (
+              <div className="success">
+                <div className="ring hold">{hold.status === "closed" ? "⛔" : "⏸"}</div>
+                <h3>{t(hold.status === "closed" ? "hold_closed_h" : "hold_paused_h")}</h3>
+                <p>{t(hold.reason)}. {t("hold_p")}</p>
+                <button className="btn btn-blue" onClick={close}>{t("cancel")}</button>
+              </div>
+            ) : done ? (
               <div className="success">
                 <div className="ring">✓</div>
                 <h3>Thank you!</h3>

@@ -331,6 +331,26 @@ export const dictionary = {
   sum_badge: { en: "{tier} badge", si: "{tier} ලාංඡනය", ta: "{tier} பதக்கம்" },
   sum_raised: { en: "{pct}% of your goal raised", si: "ඉලක්කයෙන් {pct}%ක් රැස් වී ඇත", ta: "இலக்கின் {pct}% திரட்டப்பட்டது" },
   sum_unread: { en: "{n} unread", si: "නව දැනුම්දීම් {n}ක්", ta: "{n} புதிய அறிவிப்புகள்" },
+  
+  hold_paused_h: { en: "Donations are paused", si: "පරිත්‍යාග තාවකාලිකව නවතා ඇත", ta: "நன்கொடைகள் இடைநிறுத்தப்பட்டுள்ளன" },
+  hold_closed_h: { en: "This campaign is closed", si: "මෙම අරමුදල් රැස් කිරීම වසා ඇත", ta: "இந்த பிரச்சாரம் மூடப்பட்டுள்ளது" },
+  hold_p: { en: "You can still support other verified patients.", si: "ඔබට තවමත් වෙනත් සත්‍යාපිත රෝගීන්ට සහාය විය හැක.", ta: "நீங்கள் மற்ற சரிபார்க்கப்பட்ட நோயாளிகளுக்கு இன்னும் உதவலாம்." },
+  mod_r_docs: { en: "Documents are being checked again", si: "ලේඛන නැවත පරීක්ෂා කරමින් පවතී", ta: "ஆவணங்கள் மீண்டும் சரிபார்க்கப்படுகின்றன" },
+  mod_r_hospital: { en: "The hospital asked us to stop", si: "රෝහල නැවැත්වීමට ඉල්ලා සිටියා", ta: "மருத்துவமனை நிறுத்தக் கோரியது" },
+  mod_r_done: { en: "Treatment is complete", si: "ප්‍රතිකාර අවසන්", ta: "சிகிச்சை முடிந்தது" },
+  mod_r_other: { en: "Please contact MedFund support", si: "කරුණාකර MedFund සහාය අංශය අමතන්න", ta: "MedFund உதவி மையத்தைத் தொடர்பு கொள்ளுங்கள்" },
+  mod_r_request: { en: "Closed at the patient's request", si: "රෝගියාගේ ඉල්ලීම මත වසා දමා ඇත", ta: "நோயாளியின் கோரிக்கையின் பேரில் மூடப்பட்டது" },
+  mod_r_close_requested: { en: "The patient asked to close this campaign", si: "රෝගියා මෙම අරමුදල් රැස් කිරීම වසා දැමීමට ඉල්ලා ඇත", ta: "நோயாளி இந்த பிரச்சாரத்தை மூடக் கோரியுள்ளார்" },
+  mod_r_goal: { en: "The goal was reached", si: "ඉලක්කය සපුරා ගෙන ඇත", ta: "இலக்கு அடையப்பட்டது" },
+  closed_admin: { en: "Closed by MedFund", si: "MedFund විසින් වසා ඇත", ta: "MedFund மூடியது" },
+  pending_verify_note: { en: "Waiting for a MedFund reviewer to verify your donor details.", si: "ඔබේ දායක විස්තර MedFund සමාලෝචකයෙක් තහවුරු කරන තෙක් රැඳී සිටින්න.", ta: "உங்கள் விவரங்களை MedFund மதிப்பாய்வாளர் சரிபார்க்கக் காத்திருக்கிறது." },
+  note_close_approved: { en: "Your close request was approved. The campaign is now in your past campaigns.", si: "ඔබේ වසා දැමීමේ ඉල්ලීම අනුමත විය. එය දැන් ඔබේ පැරණි අරමුදල් රැස් කිරීම් අතර ඇත.", ta: "உங்கள் மூடும் கோரிக்கை ஏற்கப்பட்டது. அது இப்போது கடந்த பிரச்சாரங்களில் உள்ளது." },
+  note_close_rejected: { en: "Your campaign stays open. A reviewer will contact you about your close request.", si: "ඔබේ අරමුදල් රැස් කිරීම විවෘතව පවතී. ඔබේ ඉල්ලීම ගැන සමාලෝචකයෙක් ඔබව සම්බන්ධ කර ගනී.", ta: "உங்கள் பிரச்சாரம் திறந்தே இருக்கும். மதிப்பாய்வாளர் உங்களைத் தொடர்பு கொள்வார்." },
+  note_new_donor: { en: "{name} registered as a donor and needs verifying.", si: "{name} දායකයෙකු ලෙස ලියාපදිංචි විය; තහවුරු කිරීම අවශ්‍යයි.", ta: "{name} கொடையாளராகப் பதிவு செய்தார்; சரிபார்ப்பு தேவை." },
+  note_donor_verified: { en: "Your donor details are verified. Thank you for joining!", si: "ඔබේ දායක විස්තර තහවුරු විය. එක් වූවාට ස්තූතියි!", ta: "உங்கள் கொடையாளர் விவரங்கள் சரிபார்க்கப்பட்டன. சேர்ந்ததற்கு நன்றி!" },
+  note_donor_rejected: { en: "We couldn't verify your donor details. Please contact MedFund support.", si: "ඔබේ දායක විස්තර තහවුරු කළ නොහැකි විය. කරුණාකර MedFund සහාය අංශය අමතන්න.", ta: "உங்கள் விவரங்களைச் சரிபார்க்க முடியவில்லை. MedFund உதவி மையத்தைத் தொடர்பு கொள்ளுங்கள்." },
+  note_donor_suspended: { en: "MedFund paused your donor card. Please contact support.", si: "MedFund ඔබේ දායක කාඩ්පත තාවකාලිකව නැවැත්තුවා. කරුණාකර සහාය අංශය අමතන්න.", ta: "MedFund உங்கள் கொடையாளர் அட்டையை இடைநிறுத்தியது. உதவி மையத்தைத் தொடர்பு கொள்ளுங்கள்." },
+  note_donor_restored: { en: "Your donor card is active again.", si: "ඔබේ දායක කාඩ්පත නැවත සක්‍රීයයි.", ta: "உங்கள் கொடையாளர் அட்டை மீண்டும் செயலில் உள்ளது." },
 };
 
 export function translate(key, lang) {

@@ -12,6 +12,7 @@ const listeners = new Set();
 const SEEDS = {
   u1: {
     status: "active",
+    verified: true,
     bloodGroup: "O−",
     district: "Colombo",
     urgent: true,
@@ -25,7 +26,7 @@ const SEEDS = {
   },
 };
 
-export const emptyDonor = () => ({ status: "active", bloodGroup: "", district: "", urgent: false, pledges: [], donations: [] });
+export const emptyDonor = () => ({ status: "active", verified: false, bloodGroup: "", district: "", urgent: false, pledges: [], donations: [] });
 
 function readRaw(userId) {
   if (!userId) return null;
@@ -54,6 +55,11 @@ export function saveDonor(userId, record) {
     // storage blocked — the change is lost on refresh
   }
   listeners.forEach((fn) => fn());
+}
+
+export function readDonorRecord(userId) {
+  const raw = readRaw(userId);
+  return raw ? JSON.parse(raw) : null;
 }
 
 export function useDonorRecord(userId) {

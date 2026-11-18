@@ -21,6 +21,13 @@ const ICONS = {
   new_application: "📝",
   close_request_admin: "📨",
   welcome: "👋",
+  close_approved: "📁",
+  close_rejected: "▶",
+  new_donor: "🩸",
+  donor_verified: "✅",
+  donor_rejected: "✕",
+  donor_suspended: "⏸",
+  donor_restored: "▶",
 };
 
 export default function NotificationList({ items, onOpen, limit }) {

@@ -24,21 +24,12 @@ export default function AdminReviewQueue({ applications }) {
   // TODO: send each decision to PATCH /api/admin/applications/{id} once the backend exists
   const decide = (id, decision) => setDecisions((prev) => ({ ...prev, [id]: decision }));
 
-  const pending = applications.filter((a) => !decisions[a.id]).length;
-  const flagged = applications.filter((a) => Object.values(a.checks).includes("fail")).length;
-
   return (
     <>
-      <div className="admin-stats">
-        <div className="fact"><span>Waiting for review</span><b>{pending}</b></div>
-        <div className="fact"><span>Flagged by AI</span><b>{flagged}</b></div>
-        <div className="fact"><span>Live campaigns</span><b>5</b></div>
-        <div className="fact"><span>Approved this month</span><b>{23 + Object.values(decisions).filter((d) => d === "approved").length}</b></div>
-      </div>
 
       <div className="sec-head">
         <div>
-          <h2>Campaign review queue</h2>
+          <h2>New patient applications</h2>
           <span className="si">AI results must be confirmed by a person before a campaign goes live</span>
         </div>
       </div>

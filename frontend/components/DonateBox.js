@@ -4,11 +4,15 @@ import { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import { useDonate } from "./DonateProvider";
 import { formatRs, percentRaised } from "@/lib/format";
+import { useHolds } from "@/lib/moderationStore";
+import { useLanguage } from "./LanguageProvider";
 
 export default function DonateBox({ patient: p }) {
   const { openDonate } = useDonate();
   const [copied, setCopied] = useState(false);
   const pct = percentRaised(p);
+  const { t } = useLanguage();
+  const hold = useHolds()[p.id];
 
   const share = async () => {
     try {
@@ -45,7 +49,13 @@ export default function DonateBox({ patient: p }) {
         <span><b>{Math.round(pct)}%</b> funded</span>
         <span><b>{formatRs(p.need - p.got)}</b> to go</span>
       </div>
-      <button className="btn btn-green btn-big" onClick={() => openDonate(p)}>
+      {hold && (
+        <div className={`hold-banner ${hold.status}`}>
+          <b>{hold.status === "closed" ? "⛔" : "⏸"} {t(hold.status === "closed" ? "hold_closed_h" : "hold_paused_h")}</b>
+          <span>{t(hold.reason)}</span>
+        </div>
+      )}
+      <button className="btn btn-green btn-big" onClick={() => openDonate(p)} disabled={Boolean(hold)}>
         Donate to {p.name.split(" ")[0]}
       </button>
       <button

@@ -31,7 +31,7 @@ function savedAccounts() {
   }
 }
 
-const allAccounts = () => [...DEMO_ACCOUNTS, ...savedAccounts()];
+export const allAccounts = () => [...DEMO_ACCOUNTS, ...savedAccounts()];
 const findByPhone = (phone) => allAccounts().find((a) => a.phone === normalisePhone(phone));
 const findByEmail = (email) => allAccounts().find((a) => a.email === email.trim().toLowerCase());
 

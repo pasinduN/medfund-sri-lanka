@@ -7,6 +7,7 @@ import { DISTRICTS } from "@/lib/constants";
 import { useAuth } from "./AuthProvider";
 import { emptyCampaignRecord, useCampaignRecord } from "@/lib/campaignStore";
 import { todayISO } from "@/lib/dates";
+import { notifyAdmins } from "@/lib/notificationStore";
 
 const DOCUMENTS = [
   { name: "medicalReports", label: "📄 Medical reports" },
@@ -60,6 +61,7 @@ export default function PatientApplicationForm() {
           submitted: todayISO(),
         },
       });
+      notifyAdmins("new_application", { name: form.get("fullName") });
     }
     setTracking(reg);
     window.scrollTo({ top: 0, behavior: "smooth" });

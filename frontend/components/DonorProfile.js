@@ -75,6 +75,7 @@ export default function DonorProfile({ user, hideWhenEmpty = false }) {
           {record.pledges.length > 0 && (
             <p className="pledges">🫀 {t("pledged")}: {record.pledges.map((p) => p.organ).join(", ")}</p>
           )}
+          {record.verified === false && <div className="form-info hold-info">⏳ {t("pending_verify_note")}</div>}
           {record.status === "paused" && <div className="form-info">{t("paused_note")}</div>}
 
           <div className="dc-actions">

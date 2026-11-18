@@ -48,13 +48,18 @@ function subscribe(callback) {
   };
 }
 
-function saveRecord(userId, record) {
+export function saveRecord(userId, record) {
   try {
     localStorage.setItem(storageKey(userId), JSON.stringify(record));
   } catch {
     // storage blocked — the change is lost on refresh
   }
   listeners.forEach((fn) => fn());
+}
+
+export function readCampaignRecord(userId) {
+  const raw = readRaw(userId);
+  return raw ? JSON.parse(raw) : null;
 }
 
 export function useCampaignRecord(userId) {

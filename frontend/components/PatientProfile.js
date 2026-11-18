@@ -10,6 +10,7 @@ import { closeCampaign, raisedSoFar, useCampaignRecord } from "@/lib/campaignSto
 import { formatDate, todayISO } from "@/lib/dates";
 import { formatRs } from "@/lib/format";
 import { notify, notifyAdmins } from "@/lib/notificationStore";
+import { clearHold, setHold, useHolds } from "@/lib/moderationStore";
 
 const REVIEW_STEPS = ["step_submitted", "step_ai", "step_admin", "step_live"];
 
@@ -18,6 +19,7 @@ export default function PatientProfile({ user }) {
   const [record, save] = useCampaignRecord(user.id);
   const [patient, setPatient] = useState(null);
   const [asking, setAsking] = useState(false);
+  const holds = useHolds();
 
   const campaign = record?.campaign;
   const patientId = campaign?.patientId;
@@ -33,6 +35,7 @@ export default function PatientProfile({ user }) {
   useEffect(() => {
     if (!goalReached) return;
     save(closeCampaign(record, patient, "goal"));
+    setHold(patient.id, "closed", "mod_r_goal");
     notify(user.id, "goal_reached");
   }, [goalReached, record, patient, save, user.id]);
 
@@ -51,14 +54,20 @@ export default function PatientProfile({ user }) {
 
   const sendRequest = ({ reason, note }) => {
     save({ ...record, campaign: { ...campaign, status: "close_requested", request: { reason, note, date: todayISO() } } });
+    setHold(campaign.patientId, "paused", "mod_r_close_requested");
     notify(user.id, "close_sent");
     notifyAdmins("close_request_admin", { name: user.name });
     setAsking(false);
   };
-  const withdrawRequest = () => save({ ...record, campaign: { ...campaign, status: "live", request: undefined } });
+  const withdrawRequest = () => {
+    save({ ...record, campaign: { ...campaign, status: "live", request: undefined } });
+    clearHold(campaign.patientId);
+  };
   const simulateGoal = () => save({ ...record, campaign: { ...campaign, demoRaised: patient.need - patient.got } });
 
   const requested = campaign?.status === "close_requested";
+  // a pause the patient didn't ask for came from the MedFund team
+  const adminHold = !requested && patient ? holds[patient.id] : null;
 
   return (
     <>
@@ -109,6 +118,12 @@ export default function PatientProfile({ user }) {
             </div>
           )}
 
+          {adminHold && (
+            <div className="form-info hold-info" style={{ marginTop: 14 }}>
+              ⏸ {t("note_admin_paused").replace("{reason}", t(adminHold.reason))}
+            </div>
+          )}
+
           <div className="dc-actions">
             <Link className="btn btn-blue" href={`/patients/${patient.id}`}>{t("view_public")}</Link>
             {requested ? (
@@ -140,14 +155,14 @@ export default function PatientProfile({ user }) {
           <ul className="hist">
             {record.history.map((h) => (
               <li key={h.reg}>
-                <span className="hico organ">{h.reason === "goal" ? "🎉" : "📁"}</span>
+                <span className="hico organ">{h.reason === "goal" ? "🎉" : h.reason === "admin" ? "⛔" : "📁"}</span>
                 <div>
                   <b>{h.title}</b>
                   <small>
                     {h.hospital} · {formatRs(h.got)} / {formatRs(h.need)} · {t("closed_on").replace("{date}", date(h.closedOn))}
                   </small>
                 </div>
-                <span className="status-pill">{t(h.reason === "goal" ? "closed_goal" : "closed_request")}</span>
+                <span className="status-pill">{t(h.reason === "goal" ? "closed_goal" : h.reason === "admin" ? "closed_admin" : "closed_request")}</span>
               </li>
             ))}
           </ul>
