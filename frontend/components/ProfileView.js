@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "./LanguageProvider";
 import { useAuth } from "./AuthProvider";
 import DonorProfile from "./DonorProfile";
+import PatientProfile from "./PatientProfile";
 import { initials } from "@/lib/format";
 
 const noSubscribe = () => () => {};
@@ -39,7 +40,8 @@ export default function ProfileView() {
         <span className={`role-tag ${user.role}`}>{t(`role_${user.role}`)}</span>
       </div>
 
-      {user.role !== "admin" && <DonorProfile user={user} />}
+      {user.role === "patient" && <PatientProfile user={user} />}
+      {user.role !== "admin" && <DonorProfile user={user} hideWhenEmpty={user.role === "patient"} />}
     </>
   );
 }

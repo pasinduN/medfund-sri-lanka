@@ -85,7 +85,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="seg" role="tablist">
+      <div className="authtabs" role="tablist">
         <button role="tab" aria-selected={method === "phone"} className={method === "phone" ? "on" : ""} onClick={() => switchMethod("phone")}>
           📱 {t("tab_phone")}
         </button>

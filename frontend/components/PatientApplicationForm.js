@@ -4,6 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import PhotoUploader from "./PhotoUploader";
 import { DISTRICTS } from "@/lib/constants";
+import { useAuth } from "./AuthProvider";
+import { emptyCampaignRecord, useCampaignRecord } from "@/lib/campaignStore";
+import { todayISO } from "@/lib/dates";
 
 const DOCUMENTS = [
   { name: "medicalReports", label: "📄 Medical reports" },
@@ -35,13 +38,30 @@ function DocumentInput({ name, label }) {
 }
 
 export default function PatientApplicationForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const { user } = useAuth();
+  const [record, save] = useCampaignRecord(user?.id);
+  const [tracking, setTracking] = useState(null);
   const [consent, setConsent] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: send new FormData(e.target) to POST /api/patients when the backend exists
-    setSubmitted(true);
+    const form = new FormData(e.target);
+    const reg = `MED-2026-PENDING-${String(Date.now()).slice(-4)}`;
+    if (user) {
+      save({
+        ...emptyCampaignRecord(),
+        ...record,
+        application: {
+          reg,
+          disease: form.get("disease"),
+          hospital: form.get("hospital"),
+          need: Number(form.get("amount")),
+          submitted: todayISO(),
+        },
+      });
+    }
+    setTracking(reg);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -52,7 +72,7 @@ export default function PatientApplicationForm() {
           <div className="ring">✓</div>
           <h3>Application received</h3>
           <p>
-            Tracking number: <b>MED-2026-PENDING-0192</b>
+            Tracking number: <b>{tracking}</b>
             <br />You&apos;ll get an SMS and email at every step below.
           </p>
         </div>
@@ -70,21 +90,24 @@ export default function PatientApplicationForm() {
             </div>
           ))}
         </div>
-        <Link className="btn btn-blue" href="/" style={{ marginTop: 10 }}>Back to home</Link>
+        <Link className="btn btn-blue" href={user ? "/profile" : "/"} style={{ marginTop: 10 }}>
+          {user ? "Track it on my profile" : "Back to home"}
+        </Link>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    // re-mounts once the user is known, so their name, phone and email fill in
+    <form key={user?.id ?? "guest"} onSubmit={handleSubmit}>
       <div className="panel" style={{ marginBottom: 18 }}>
         <h3>1 · Personal details</h3>
         <div className="formgrid">
-          <div className="field"><label>Full name (as on NIC)</label><input name="fullName" required placeholder="Patient's full name" /></div>
-          <div className="field"><label>NIC number</label><input name="nic" required placeholder="XXXXXXXXXV / 12-digit NIC" /></div>
+          <div className="field"><label>Full name (as on NIC)</label><input name="fullName" required defaultValue={user?.name} placeholder="Patient's full name" /></div>
+          <div className="field"><label>NIC number</label><input name="nic" required  placeholder="XXXXXXXXXV / 12-digit NIC" /></div>
           <div className="field"><label>Date of birth</label><input name="dob" type="date" /></div>
-          <div className="field"><label>Phone</label><input name="phone" type="tel" required placeholder="07X XXX XXXX" /></div>
-          <div className="field"><label>Email</label><input name="email" type="email" placeholder="name@email.com" /></div>
+          <div className="field"><label>Phone</label><input name="phone" type="tel" required defaultValue={user?.phone} placeholder="07X XXX XXXX" /></div>
+          <div className="field"><label>Email</label><input name="email" type="email" defaultValue={user?.email} placeholder="name@email.com" /></div>
           <div className="field">
             <label>District</label>
             <select name="district" defaultValue="Colombo">

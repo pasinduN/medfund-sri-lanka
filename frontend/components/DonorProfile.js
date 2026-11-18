@@ -11,13 +11,14 @@ import { addDays, formatDate } from "@/lib/dates";
 
 const HISTORY_ICONS = { blood: "🩸", organ: "🫀", pledge: "📜" };
 
-export default function DonorProfile({ user }) {
+export default function DonorProfile({ user, hideWhenEmpty = false }) {
   const { lang, t } = useLanguage();
   const [record, save] = useDonorRecord(user.id);
   const [logging, setLogging] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
   if (!record) {
+    if (hideWhenEmpty) return null;
     return (
       <div className="panel empty-state">
         <span className="glyph">🩸</span>
