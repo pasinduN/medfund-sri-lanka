@@ -73,32 +73,32 @@ export default function DonorSignup() {
   // the forms re-mount when the user is known, so their saved details fill in
   const formKey = user?.id ?? "guest";
 
-  return (
+    return (
     <div className="wrap duo">
       <div className="mod blood">
         <span className="glyph">🩸</span>
         <h3>{t("blood_h")} {lang === "en" && <span className="si">රුධිර දායකයෙක් වන්න</span>}</h3>
         <p>{t("blood_p")}</p>
         <form key={formKey} className="formgrid" onSubmit={handleBlood}>
-          <div className="field"><label>Full name</label><input name="fullName" defaultValue={user?.name} placeholder="Your name" /></div>
+          <div className="field"><label>{t("full_name")}</label><input name="fullName" defaultValue={user?.name} placeholder={t("name_ph")} /></div>
           <div className="field">
-            <label>Blood group</label>
+            <label>{t("lbl_blood_group")}</label>
             <select name="bloodGroup" defaultValue={record?.bloodGroup || BLOOD_GROUPS[0]}>
               {BLOOD_GROUPS.map((g) => <option key={g}>{g}</option>)}
             </select>
           </div>
           <div className="field">
-            <label>District</label>
+            <label>{t("lbl_district")}</label>
             <select name="district" defaultValue={record?.district || "Colombo"}>
               {DISTRICTS.map((d) => <option key={d}>{d}</option>)}
             </select>
           </div>
-          <div className="field"><label>Phone (kept private)</label><input name="phone" defaultValue={user?.phone} placeholder="07X XXX XXXX" /></div>
+          <div className="field"><label>{t("phone_private")}</label><input name="phone" defaultValue={user?.phone} placeholder="07X XXX XXXX" /></div>
           <div className="field full">
-            <label>Donation urgency</label>
+            <label>{t("don_urgency")}</label>
             <div className="urgopt">
-              <label><input type="radio" name="urgency" value="urgent" defaultChecked /> ⚡ <b>&nbsp;Urgent responder</b> — contact me anytime, including night-time emergencies</label>
-              <label><input type="radio" name="urgency" value="normal" /> 🗓 <b>&nbsp;Non-urgent</b> — scheduled donation camps and appointments only</label>
+              <label><input type="radio" name="urgency" value="urgent" defaultChecked /> <span><b>{t("urg_resp")}</b> — {t("urg_resp_desc")}</span></label>
+              <label><input type="radio" name="urgency" value="normal" /> <span><b>🗓 {t("nonurg")}</b> — {t("nonurg_desc")}</span></label>
             </div>
           </div>
           <div className="field full">
@@ -106,7 +106,7 @@ export default function DonorSignup() {
           </div>
           <div className="field full"><Result status={bloodResult} savedKey="reg_saved_blood" /></div>
         </form>
-        <p className="legal">Contact requests are routed through MedFund. Your details are never listed publicly.</p>
+        <p className="legal">{t("blood_legal")}</p>
       </div>
 
       <div className="mod organ" id="organ">
@@ -114,30 +114,30 @@ export default function DonorSignup() {
         <h3>{t("organ_h")} {lang === "en" && <span className="si">ඉන්ද්‍රිය පරිත්‍යාග ප්‍රතිඥාව</span>}</h3>
         <p>{t("organ_p")}</p>
         <form key={formKey} className="formgrid" onSubmit={handleOrgan}>
-          <div className="field"><label>Full name</label><input name="fullName" defaultValue={user?.name} placeholder="Your name" /></div>
+          <div className="field"><label>{t("full_name")}</label><input name="fullName" defaultValue={user?.name} placeholder={t("name_ph")} /></div>
           <div className="field">
-            <label>Organ / tissue</label>
+            <label>{t("organ_tissue")}</label>
             <select name="organ">
               {ORGANS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </div>
           <div className="field">
-            <label>Blood group</label>
+            <label>{t("lbl_blood_group")}</label>
             <select name="bloodGroup" defaultValue={record?.bloodGroup || BLOOD_GROUPS[0]}>
               {BLOOD_GROUPS.map((g) => <option key={g}>{g}</option>)}
             </select>
           </div>
           <div className="field">
-            <label>District</label>
+            <label>{t("lbl_district")}</label>
             <select name="district" defaultValue={record?.district || "Colombo"}>
               {DISTRICTS.map((d) => <option key={d}>{d}</option>)}
             </select>
           </div>
           <div className="field full">
-            <label>Pledge urgency</label>
+            <label>{t("pledge_urgency")}</label>
             <div className="urgopt">
-              <label><input type="radio" name="urgency" value="urgent" defaultChecked /> ⚡ <b>&nbsp;Urgent</b> — living donor, willing to be contacted immediately for time-critical matches</label>
-              <label><input type="radio" name="urgency" value="normal" /> 🗓 <b>&nbsp;Non-urgent</b> — after-life pledge, no immediate contact needed</label>
+              <label><input type="radio" name="urgency" value="urgent" defaultChecked /> <span><b>⚡ {t("urgent")}</b> — {t("organ_urgent_desc")}</span></label>
+              <label><input type="radio" name="urgency" value="normal" /> <span><b>🗓 {t("nonurg")}</b> — {t("organ_nonurg_desc")}</span></label>
             </div>
           </div>
           <div className="field full">
@@ -145,7 +145,7 @@ export default function DonorSignup() {
           </div>
           <div className="field full"><Result status={organResult} savedKey="reg_saved_organ" /></div>
         </form>
-        <p className="legal">Pledges are shared only with hospital transplant units. Consent can be withdrawn at any time.</p>
+        <p className="legal">{t("organ_legal")}</p>
       </div>
     </div>
   );

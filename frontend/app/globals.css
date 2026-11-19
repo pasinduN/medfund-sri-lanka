@@ -653,3 +653,7 @@ main{animation:fade .35s ease}
 [data-theme=dark] .hold-banner{background:#3A2E14;color:#E3B55A}
 [data-theme=dark] .hold-banner.closed{background:var(--urgent-soft);color:var(--urgent)}
 .ring.hold{background:#FFF1E0;color:#B8860B}
+
+/* ---------- polish ---------- */
+.hold-badge{background:#FFF1E0 !important;color:#B8860B !important}
+[data-theme=dark] .hold-badge{background:#3A2E14 !important;color:#E3B55A !important}

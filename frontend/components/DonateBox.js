@@ -27,11 +27,11 @@ export default function DonateBox({ patient: p }) {
   if (p.closed) {
     return (
       <div className="donate-box">
-        <div className="closed-banner">🎉 Goal reached — donations closed automatically</div>
+        <div className="closed-banner">🎉 {t("goal_closed_auto")}</div>
         <div style={{ marginTop: 16 }}>
           <ProgressBar percent={100} />
           <div className="mini-stats" style={{ marginTop: 8 }}>
-            <span><b>{formatRs(p.got)}</b> raised by {p.donors ?? "many"} donors</span>
+            <span><b>{formatRs(p.got)}</b> {t("raised")}{p.donors && <> · {t("donors_n").replace("{n}", p.donors)}</>}</span>
           </div>
         </div>
       </div>
@@ -40,14 +40,14 @@ export default function DonateBox({ patient: p }) {
 
   return (
     <div className="donate-box">
-      {p.urgent && <span className="days">⏳ {p.days} days left</span>}
+      {p.urgent && <span className="days">⏳ {t("days_left").replace("{n}", p.days)}</span>}
       <div className="big-amt">
-        {formatRs(p.got)} <span>raised of {formatRs(p.need)}</span>
+        {formatRs(p.got)} <span>{t("of_goal").replace("{goal}", formatRs(p.need))}</span>
       </div>
       <ProgressBar percent={pct} />
       <div className="mini-stats">
-        <span><b>{Math.round(pct)}%</b> funded</span>
-        <span><b>{formatRs(p.need - p.got)}</b> to go</span>
+        <span><b>{Math.round(pct)}%</b> {t("funded")}</span>
+        <span><b>{formatRs(p.need - p.got)}</b> {t("to_go")}</span>
       </div>
       {hold && (
         <div className={`hold-banner ${hold.status}`}>
@@ -56,7 +56,7 @@ export default function DonateBox({ patient: p }) {
         </div>
       )}
       <button className="btn btn-green btn-big" onClick={() => openDonate(p)} disabled={Boolean(hold)}>
-        Donate to {p.name.split(" ")[0]}
+        {t("donate_to").replace("{name}", p.name.split(" ")[0])}
       </button>
       <button
         className="btn btn-ghost"
@@ -64,10 +64,10 @@ export default function DonateBox({ patient: p }) {
         onClick={share}
         disabled={copied}
       >
-        {copied ? "Link copied ✓ Share it anywhere" : "🔗 Share campaign"}
+        {copied ? t("link_copied") : `🔗 ${t("share_campaign")}`}
       </button>
       <div className="safe">
-        🔒 <span>Payments via PayHere / card go to MedFund&apos;s audited campaign account — not to a personal bank account. Receipts are emailed instantly.</span>
+        🔒 <span>{t("pay_safe")}</span>
       </div>
     </div>
   );

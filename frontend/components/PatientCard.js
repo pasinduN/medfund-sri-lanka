@@ -6,14 +6,17 @@ import ProgressBar from "./ProgressBar";
 import { useDonate } from "./DonateProvider";
 import { useLanguage } from "./LanguageProvider";
 import { formatRs, percentRaised, patientGradient } from "@/lib/format";
+import { useHolds } from "@/lib/moderationStore";
 
 export default function PatientCard({ patient: p }) {
   const router = useRouter();
   const { openDonate } = useDonate();
   const { t } = useLanguage();
+    const hold = useHolds()[p.id];
 
   let tag = t("days_left").replace("{n}", p.days);
   if (p.closed) tag = `✓ ${t("completed")}`;
+  else if (hold) tag = `⏸ ${t("paused_tag")}`;
   else if (p.urgent) tag = `⚡ ${t("urgent")} · ${tag}`;
 
   return (

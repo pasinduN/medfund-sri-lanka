@@ -51,17 +51,14 @@ export function DonateProvider({ children }) {
             ) : done ? (
               <div className="success">
                 <div className="ring">✓</div>
-                <h3>Thank you!</h3>
-                <p>
-                  Your donation of <b>{formatRs(amount)}</b> to {patient.name}&apos;s campaign was received.
-                  <br />A receipt has been emailed to you.
-                </p>
-                <button className="btn btn-blue" onClick={close}>Back to campaign</button>
+                <h3>{t("thanks_h")}</h3>
+                <p>{t("thanks_p").replace("{amount}", formatRs(amount)).replace("{name}", patient.name)}</p>
+                <button className="btn btn-blue" onClick={close}>{t("back_campaign")}</button>
               </div>
             ) : (
               <>
-                <h3>Make a donation</h3>
-                <p className="to">Supporting <b>{patient.name}</b> · {patient.disease}</p>
+                <h3>{t("donate_title")}</h3>
+                <p className="to">{t("donate_supporting")} <b>{patient.name}</b> · {patient.disease}</p>
 
                 <div className="amount-grid">
                   {AMOUNTS.map((a) => (
@@ -73,21 +70,21 @@ export function DonateProvider({ children }) {
                 <input
                   className="custom-amt"
                   type="number"
-                  placeholder="Or enter another amount (Rs)"
+                  placeholder={t("donate_other_amt")}
                   onChange={(e) => setAmount(Number(e.target.value) || 0)}
                 />
 
                 <div className="paylist">
-                  <label className="pay"><input type="radio" name="pm" defaultChecked /> 💳 PayHere <span className="hint">Visa · Master · LKR — recommended</span></label>
-                  <label className="pay"><input type="radio" name="pm" /> 🌐 Card via Stripe <span className="hint">International donors</span></label>
-                  <label className="pay"><input type="radio" name="pm" /> 🏦 Bank transfer <span className="hint">To MedFund audited account</span></label>
+                  <label className="pay"><input type="radio" name="pm" defaultChecked /> 💳 PayHere <span className="hint">{t("pay_payhere_hint")}</span></label>
+                  <label className="pay"><input type="radio" name="pm" /> 🌐 {t("pay_stripe")} <span className="hint">{t("pay_stripe_hint")}</span></label>
+                  <label className="pay"><input type="radio" name="pm" /> 🏦 {t("pay_bank")} <span className="hint">{t("pay_bank_hint")}</span></label>
                 </div>
-                <label className="anon"><input type="checkbox" /> Donate anonymously — hide my name from the campaign page</label>
+                <label className="anon"><input type="checkbox" /> {t("donate_anon")}</label>
 
                 <button className="btn btn-green btn-big" disabled={amount <= 0} onClick={() => setDone(true)}>
-                  Donate securely
+                  {t("donate_secure")}
                 </button>
-                <p className="safe" style={{ marginTop: 12 }}>🔒 This is a prototype — no real payment is processed.</p>
+                <p className="safe" style={{ marginTop: 12 }}>🔒 {t("donate_proto")}</p>
               </>
             )}
           </div>

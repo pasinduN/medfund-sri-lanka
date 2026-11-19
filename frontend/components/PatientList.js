@@ -5,21 +5,31 @@ import { useRouter } from "next/navigation";
 import ProgressBar from "./ProgressBar";
 import { colors, formatRs, percentRaised } from "@/lib/format";
 import { useLanguage } from "./LanguageProvider";
+import { useHolds } from "@/lib/moderationStore";
 
-const FILTERS = ["All", "Urgent", "Kidney", "Cancer", "Heart", "Surgery", "Completed"];
+// "word" is matched against the disease name, so it stays in English even when the label is translated
+const FILTERS = [
+  { key: "all", label: "f_all" },
+  { key: "urgent", label: "urgent" },
+  { key: "kidney", label: "f_kidney", word: "kidney" },
+  { key: "cancer", label: "f_cancer", word: "cancer" },
+  { key: "heart", label: "f_heart", word: "heart" },
+  { key: "surgery", label: "f_surgery", word: "surgery" },
+  { key: "completed", label: "completed" },
+];
 
 function matchesFilter(p, filter) {
-  if (filter === "All") return true;
-  if (filter === "Urgent") return p.urgent && !p.closed;
-  if (filter === "Completed") return p.closed;
-  return p.disease.toLowerCase().includes(filter.toLowerCase());
+  if (filter.key === "all") return true;
+  if (filter.key === "urgent") return p.urgent && !p.closed;
+  if (filter.key === "completed") return p.closed;
+  return p.disease.toLowerCase().includes(filter.word);
 }
-
 export default function PatientList({ patients }) {
   const router = useRouter();
   const { t } = useLanguage();
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState(FILTERS[0]);
+  const holds = useHolds();
 
   const q = query.toLowerCase();
   const results = patients
@@ -42,8 +52,8 @@ export default function PatientList({ patients }) {
         </div>
         <div className="chips">
           {FILTERS.map((f) => (
-            <button key={f} className={`chip ${filter === f ? "on" : ""}`} onClick={() => setFilter(f)}>
-              {f}
+            <button key={f.key} className={`chip ${filter.key === f.key ? "on" : ""}`} onClick={() => setFilter(f)}>
+              {t(f.label)}
             </button>
           ))}
         </div>
@@ -52,9 +62,9 @@ export default function PatientList({ patients }) {
       <div className="plist">
         {results.length === 0 && (
           <div className="empty">
-            No patients match your search.
+            {t("no_patients")}
             <br />
-            Try another name, disease or hospital.
+            {t("no_patients_hint")}
           </div>
         )}
 
@@ -68,6 +78,7 @@ export default function PatientList({ patients }) {
                   <span className="vbadge" style={{ background: "var(--urgent-soft)", color: "var(--urgent)" }}>⚡ {t("urgent")}</span>
                 )}
                 {p.closed && <span className="vbadge">{t("completed")}</span>}
+                {holds[p.id] && !p.closed && <span className="vbadge hold-badge">⏸ {t("paused_tag")}</span>}
               </div>
               <div className="pmeta">{p.disease} · {p.hospital}</div>
               <ProgressBar percent={percentRaised(p)} cells={20} />

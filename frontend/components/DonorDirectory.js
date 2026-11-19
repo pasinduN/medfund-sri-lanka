@@ -5,11 +5,11 @@ import { useSearchParams } from "next/navigation";
 import { useLanguage } from "./LanguageProvider";
 
 const FILTERS = [
-  { key: "all", label: "All" },
-  { key: "blood", label: "Blood" },
-  { key: "organ", label: "Organ pledge" },
-  { key: "urgent", label: "⚡ Urgent responders" },
-  { key: "available", label: "Available now" },
+  { key: "all", label: "f_all" },
+  { key: "blood", label: "f_blood" },
+  { key: "organ", label: "f_organ" },
+  { key: "urgent", label: "f_urgent_resp" },
+  { key: "available", label: "f_available" },
 ];
 
 function matchesFilter(d, filter) {
@@ -34,7 +34,7 @@ function ContactButton() {
         setTimeout(() => setSent(false), 2600);
       }}
     >
-      {sent ? "Request sent ✓ MedFund will connect you" : t("req_contact")}
+      {sent ? t("contact_sent") : t("req_contact")}
     </button>
   );
 }
@@ -67,7 +67,7 @@ export default function DonorDirectory({ donors }) {
         <div className="chips">
           {FILTERS.map((f) => (
             <button key={f.key} className={`chip ${filter === f.key ? "on" : ""}`} onClick={() => setFilter(f.key)}>
-              {f.label}
+              {t(f.label)}
             </button>
           ))}
         </div>
@@ -76,9 +76,9 @@ export default function DonorDirectory({ donors }) {
       <div className="plist">
         {results.length === 0 && (
           <div className="empty">
-            No donors found for that search.
+            {t("no_donors")}
             <br />
-            Try a district name like <b>Kalutara</b> or a blood group like <b>O−</b>.
+            {t("no_donors_hint")}
           </div>
         )}
 
@@ -97,8 +97,8 @@ export default function DonorDirectory({ donors }) {
                   )}
                 </div>
                 <div className="pmeta">
-                  {isOrgan ? <>Organ pledge · <b>{d.organ}</b> · {d.group}</> : <>Blood donor · <b>{d.group}</b></>}
-                  {" "}· 📍 {d.district} district
+                  {isOrgan ? <>{t("f_organ")} · <b>{d.organ}</b> · {d.group}</> : <>{t("blood_donor_lbl")} · <b>{d.group}</b></>}
+                  {" "}· 📍 {d.district}
                 </div>
               </div>
               <span className={`avail ${d.available ? "" : "off"}`}>{d.available ? t("avail") : t("cooldown")}</span>

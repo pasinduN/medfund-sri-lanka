@@ -23,8 +23,13 @@ export const daysBetween = (fromIso, toIso) => Math.round((parseDate(toIso) - pa
 
 const LOCALES = { en: "en-GB", si: "si-LK", ta: "ta-LK" };
 
+// Browsers write Sinhala months the old way (දුරුතු, නවම්…), so Sinhala uses the everyday names instead
+const SI_MONTHS = ["ජනවාරි", "පෙබරවාරි", "මාර්තු", "අප්‍රේල්", "මැයි", "ජූනි", "ජූලි", "අගෝස්තු", "සැප්තැම්බර්", "ඔක්තෝබර්", "නොවැම්බර්", "දෙසැම්බර්"];
+
 export function formatDate(iso, lang = "en") {
-  return parseDate(iso).toLocaleDateString(LOCALES[lang] ?? "en-GB", { day: "numeric", month: "short", year: "numeric" });
+  const date = parseDate(iso);
+  if (lang === "si") return `${date.getFullYear()} ${SI_MONTHS[date.getMonth()]} ${date.getDate()}`;
+  return date.toLocaleDateString(LOCALES[lang] ?? "en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
 
 // "5 minutes ago", "yesterday" — older than a week shows the date instead
