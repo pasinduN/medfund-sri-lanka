@@ -657,3 +657,11 @@ main{animation:fade .35s ease}
 /* ---------- polish ---------- */
 .hold-badge{background:#FFF1E0 !important;color:#B8860B !important}
 [data-theme=dark] .hold-badge{background:#3A2E14 !important;color:#E3B55A !important}
+
+/* ---------- phone fix: donor rows ---------- */
+.pname{flex-wrap:wrap}
+.vbadge{white-space:nowrap}
+@media(max-width:600px){
+  .drow{flex-wrap:wrap}
+  .drow .btn{flex-basis:100%;justify-content:center}
+}
