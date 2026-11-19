@@ -15,6 +15,9 @@ function Result({ status, savedKey }) {
   if (status === "saved") {
     return <div className="form-info">{t(savedKey)} <Link href="/profile">{t("see_profile")} →</Link></div>;
   }
+  if (status === "removed") {
+    return <div className="form-error">{t("reg_removed")}</div>;
+  }
   if (status === "login") {
     return <div className="form-error">{t("reg_need_login")} <Link href="/login">{t("nav_login")} →</Link></div>;
   }
@@ -37,6 +40,10 @@ export default function DonorSignup() {
       setBloodResult("login");
       return;
     }
+    if (record?.status === "removed") {
+      setBloodResult("removed");
+      return;
+    }
     const form = new FormData(e.target);
     save({
       ...current(),
@@ -52,6 +59,10 @@ export default function DonorSignup() {
     e.preventDefault();
     if (!user) {
       setOrganResult("login");
+      return;
+    }
+    if (record?.status === "removed") {
+      setOrganResult("removed");
       return;
     }
     const form = new FormData(e.target);

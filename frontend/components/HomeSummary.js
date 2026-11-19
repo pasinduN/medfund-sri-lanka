@@ -46,7 +46,7 @@ export default function HomeSummary() {
     }
   }
 
-  if (donor && donor.status !== "unregistered") {
+  if (donor && donor.status !== "unregistered" && donor.status !== "removed") {
     const blood = bloodEligibility(donor);
     chips.push(
       blood.canDonate
@@ -56,7 +56,7 @@ export default function HomeSummary() {
     const { tier } = rewardStatus(donor);
     if (tier) chips.push({ icon: tier.icon, text: t("sum_badge").replace("{tier}", t(tier.key)) });
     if (donor.status === "paused") chips.push({ icon: "⏸", text: t("status_paused") });
-  } else if (user.role === "donor") {
+  } else if (user.role === "donor" && !donor) {
     action = { href: "/register-donor", key: "nav_regdonor" };
   }
 

@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "./LanguageProvider";
 
-// The patient sees the chosen reason in their notification, so reasons are i18n keys
-const REASONS = ["mod_r_docs", "mod_r_hospital", "mod_r_done", "mod_r_other"];
+// The patient or donor sees the chosen reason in their notification, so reasons are i18n keys
+const CAMPAIGN_REASONS = ["mod_r_docs", "mod_r_hospital", "mod_r_done", "mod_r_other"];
 
-export default function AdminActionDialog({ title, text, confirmLabel, danger, onConfirm, onCancel }) {
+export default function AdminActionDialog({ title, text, confirmLabel, danger, reasons = CAMPAIGN_REASONS, onConfirm, onCancel }) {
   const { t } = useLanguage();
-  const [reason, setReason] = useState(REASONS[0]);
+  const [reason, setReason] = useState(reasons[0]);
   const cancelRef = useRef(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function AdminActionDialog({ title, text, confirmLabel, danger, o
         <p className="to">{text}</p>
 
         <div className="urgopt" role="radiogroup" style={{ marginBottom: 16 }}>
-          {REASONS.map((r) => (
+          {reasons.map((r) => (
             <label key={r}>
               <input type="radio" name="reason" checked={reason === r} onChange={() => setReason(r)} /> {t(r)}
             </label>

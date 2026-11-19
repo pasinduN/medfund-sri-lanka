@@ -670,3 +670,6 @@ main{animation:fade .35s ease}
 .skeleton{background:linear-gradient(90deg,var(--card) 25%,var(--mist) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
 @keyframes shimmer{to{background-position:-200% 0}}
 @media(prefers-reduced-motion:reduce){.skeleton{animation:none}}
+
+/* ---------- removed donors ---------- */
+.closed-pill{background:var(--urgent-soft) !important;color:var(--urgent) !important}

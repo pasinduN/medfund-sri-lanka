@@ -28,6 +28,7 @@ const ICONS = {
   donor_rejected: "✕",
   donor_suspended: "⏸",
   donor_restored: "▶",
+  donor_removed: "⛔",
 };
 
 export default function NotificationList({ items, onOpen, limit }) {

@@ -545,6 +545,14 @@ export const dictionary = {
   ap_s4_t: { en: "Campaign goes live", si: "අරමුදල් රැස් කිරීම සයිට් එකේ පළ වෙනවා", ta: "பிரச்சாரம் வெளியிடப்படும்" },
   ap_s4: { en: "You receive a registration number like MED-2026-000181.", si: "MED-2026-000181 වගේ ලියාපදිංචි අංකයක් ඔබට ලැබෙනවා.", ta: "MED-2026-000181 போன்ற பதிவு எண் உங்களுக்குக் கிடைக்கும்." },
   ap_track_profile: { en: "Track it on my profile", si: "මගේ ගිණුමෙන් බලන්න", ta: "என் சுயவிவரத்தில் பார்" },
+  
+  donor_r_fake: { en: "Fake or duplicate account", si: "බොරු හෝ දෙවරක් හදපු ගිණුමක්", ta: "போலி அல்லது நகல் கணக்கு" },
+  donor_r_medical: { en: "Not able to donate for health reasons — please talk to the National Blood Centre", si: "සෞඛ්‍ය හේතු නිසා දැනට පරිත්‍යාග කළ නොහැක — කරුණාකර ජාතික රුධිර පාරවිලයන සේවය අමතන්න", ta: "உடல்நலக் காரணங்களால் தானம் செய்ய முடியாது — தேசிய இரத்த மாற்று சேவையைத் தொடர்பு கொள்ளுங்கள்" },
+  donor_r_other: { en: "Please contact MedFund support", si: "කරුණාකර MedFund සහාය අංශය අමතන්න", ta: "MedFund உதவி மையத்தைத் தொடர்பு கொள்ளுங்கள்" },
+  note_donor_removed: { en: "MedFund removed you from the donor list: {reason}.", si: "MedFund ඔබව දායක ලැයිස්තුවෙන් ඉවත් කළා: {reason}.", ta: "MedFund உங்களை நன்கொடையாளர் பட்டியலிலிருந்து நீக்கியது: {reason}." },
+  removed_h: { en: "You're not on the donor list", si: "ඔබ දායක ලැයිස්තුවේ නැත", ta: "நீங்கள் நன்கொடையாளர் பட்டியலில் இல்லை" },
+  removed_p: { en: "Your donation history is still saved. If you think this is a mistake, please contact MedFund.", si: "ඔබේ පරිත්‍යාග ඉතිහාසය තවමත් සුරැකී ඇත. මෙය වැරැද්දක් කියලා හිතෙනවා නම් කරුණාකර MedFund අමතන්න.", ta: "உங்கள் நன்கொடை வரலாறு சேமிக்கப்பட்டுள்ளது. இது தவறு என்றால் MedFund ஐத் தொடர்பு கொள்ளுங்கள்." },
+  reg_removed: { en: "This account can't register as a donor. Please contact MedFund.", si: "මෙම ගිණුමෙන් දායකයෙකු ලෙස ලියාපදිංචි විය නොහැක. කරුණාකර MedFund අමතන්න.", ta: "இந்தக் கணக்கு நன்கொடையாளராகப் பதிவு செய்ய முடியாது. MedFund ஐத் தொடர்பு கொள்ளுங்கள்." },
 };
 
 export function translate(key, lang) {

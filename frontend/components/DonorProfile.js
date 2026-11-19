@@ -32,7 +32,7 @@ export default function DonorProfile({ user, hideWhenEmpty = false }) {
 
   const date = (iso) => formatDate(iso, lang);
   const setStatus = (status) => save({ ...record, status });
-  const registered = record.status !== "unregistered";
+  const registered = record.status !== "unregistered" && record.status !== "removed";
   const blood = bloodEligibility(record);
   const reward = rewardStatus(record);
 
@@ -86,6 +86,13 @@ export default function DonorProfile({ user, hideWhenEmpty = false }) {
             )}
             <button className="btn btn-line-red" onClick={() => setConfirming(true)}>{t("unregister")}</button>
           </div>
+        </div>
+      ) : record.status === "removed" ? (
+        <div className="panel empty-state">
+          <span className="glyph">⛔</span>
+          <h3>{t("removed_h")}</h3>
+          <p>{t(record.removedReason)}</p>
+          <p className="muted-sm">{t("removed_p")}</p>
         </div>
       ) : (
         <div className="panel empty-state">

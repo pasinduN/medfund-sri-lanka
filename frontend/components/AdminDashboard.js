@@ -12,10 +12,13 @@ import { closeCampaign, raisedSoFar, readCampaignRecord, saveRecord as saveCampa
 import { readDonorRecord, saveDonor } from "@/lib/donorStore";
 import { clearHold, setHold, useHolds } from "@/lib/moderationStore";
 import { notify } from "@/lib/notificationStore";
-import { formatDate } from "@/lib/dates";
+import { formatDate, todayISO } from "@/lib/dates";
 import { formatRs } from "@/lib/format";
 
 const noSubscribe = () => () => {};
+
+// Kept vague on purpose: the donor's notification never names a disease
+const DONOR_REMOVE_REASONS = ["donor_r_fake", "donor_r_medical", "donor_r_other"];
 
 // Admin screens stay in English: they are used by the MedFund team, not the public.
 // Anything the patient or donor sees (reasons, notifications) still goes through i18n.
@@ -55,7 +58,10 @@ export default function AdminDashboard({ applications, patients }) {
 
   const donorAccounts = accounts
     .map((account) => ({ account, record: readDonorRecord(account.id) }))
-    .filter(({ record }) => record && record.status !== "unregistered");
+    .filter(({ record }) => record && record.status !== "unregistered" && record.status !== "removed");
+  const removedDonors = accounts
+    .map((account) => ({ account, record: readDonorRecord(account.id) }))
+    .filter(({ record }) => record?.status === "removed");
   const newDonors = donorAccounts.filter(({ record }) => record.verified === false);
 
   // ---------- campaign actions ----------
@@ -99,10 +105,17 @@ export default function AdminDashboard({ applications, patients }) {
 
   // ---------- donor actions ----------
 
-  const updateDonor = (account, record, changes, noteType) => {
+  const updateDonor = (account, record, changes, noteType, params) => {
     saveDonor(account.id, { ...record, ...changes });
-    notify(account.id, noteType);
+    notify(account.id, noteType, params);
     refresh();
+  };
+
+  // The record is kept (not deleted) so the same person can't simply sign up again,
+  // and so a mistake can be undone. TODO: the backend also keeps an audit log entry.
+  const removeDonor = ({ account, record }, reason) => {
+    updateDonor(account, record, { status: "removed", removedReason: reason, removedOn: todayISO() }, "donor_removed", { reason });
+    setDialog(null);
   };
 
   const stats = [
@@ -213,6 +226,25 @@ export default function AdminDashboard({ applications, patients }) {
                 ) : (
                   <button className="btn btn-ghost" onClick={() => updateDonor(account, record, { status: "paused" }, "donor_suspended")}>⏸ Suspend</button>
                 )}
+                <button className="btn btn-line-red" onClick={() => setDialog({ type: "removeDonor", donor: { account, record } })}>⛔ Remove</button>
+              </div>
+            </div>
+          ))}
+
+          {removedDonors.length > 0 && <div className="sec-head"><h2>Removed donors</h2></div>}
+          {removedDonors.map(({ account, record }) => (
+            <div className="review" key={account.id}>
+              <div>
+                <div className="pname">{account.name} <span className="status-pill closed-pill">Removed</span></div>
+                <div className="pmeta">{t(record.removedReason)} · {formatDate(record.removedOn, lang)}</div>
+              </div>
+              <div className="actions">
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => updateDonor(account, record, { status: "active", removedReason: undefined, removedOn: undefined }, "donor_restored")}
+                >
+                  ↩ Undo remove
+                </button>
               </div>
             </div>
           ))}
@@ -226,6 +258,17 @@ export default function AdminDashboard({ applications, patients }) {
           text="The campaign stays visible, but the Donate button is turned off until you resume it. The patient is told why."
           confirmLabel="⏸ Pause donations"
           onConfirm={(reason) => pause(dialog.patient, reason)}
+          onCancel={() => setDialog(null)}
+        />
+      )}
+      {dialog?.type === "removeDonor" && (
+        <AdminActionDialog
+          title={`Remove ${dialog.donor.account.name} from the donor list?`}
+          text="They disappear from the directory and can't register again with this account. Their donation history is kept. The donor is told the reason, but never a diagnosis."
+          confirmLabel="⛔ Remove donor"
+          danger
+          reasons={DONOR_REMOVE_REASONS}
+          onConfirm={(reason) => removeDonor(dialog.donor, reason)}
           onCancel={() => setDialog(null)}
         />
       )}

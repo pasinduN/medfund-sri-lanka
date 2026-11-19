@@ -38,7 +38,8 @@ export function timeAgo(dateTime, lang = "en") {
   const abs = Math.abs(seconds);
   const rtf = new Intl.RelativeTimeFormat(LOCALES[lang] ?? "en-GB", { numeric: "auto" });
 
-  if (abs < 60) return rtf.format(0, "second");
+  // some browsers have no Sinhala word for "now" and fall back to English
+  if (abs < 60) return lang === "si" ? "දැන්" : rtf.format(0, "second");
   if (abs < 3600) return rtf.format(Math.round(seconds / 60), "minute");
   if (abs < 86400) return rtf.format(Math.round(seconds / 3600), "hour");
   if (abs < 7 * 86400) return rtf.format(Math.round(seconds / 86400), "day");
