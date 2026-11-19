@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { formatRs } from "@/lib/format";
+import { useLanguage } from "./LanguageProvider";
 
+// The letters themselves stay in English, the way Sri Lankan hospitals issue them; only the buttons around them translate
 const DOCS = [
-  { kind: "report", label: "📄 Medical report" },
-  { kind: "estimate", label: "🏥 Hospital cost estimate" },
-  { kind: "letter", label: "🖊 Doctor's recommendation" },
-  { kind: "gn", label: "🏛 Grama Niladhari certificate" },
+  { kind: "report", label: "doc_report" },
+  { kind: "estimate", label: "doc_estimate" },
+  { kind: "letter", label: "doc_letter" },
+  { kind: "gn", label: "doc_gn" },
 ];
 
 function Redact({ width }) {
@@ -80,6 +82,7 @@ function buildDocument(kind, p) {
 }
 
 export default function DocumentViewer({ patient }) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(null);
 
   useEffect(() => {
@@ -95,7 +98,7 @@ export default function DocumentViewer({ patient }) {
       <div className="docgrid">
         {DOCS.map((d) => (
           <div className="doc" key={d.kind} onClick={() => setOpen(d.kind)}>
-            {d.label} <span className="st">Preview</span>
+            {t(d.label)} <span className="st">{t("doc_preview")}</span>
           </div>
         ))}
       </div>
@@ -115,12 +118,10 @@ export default function DocumentViewer({ patient }) {
                 {patient.hospital.split(",")[0].toUpperCase()}<br />OFFICIAL<br />STAMP
               </div>
             </div>
-            <div className="aiband">🤖 AI check: stamp ✓ · signature ✓ · no edits detected &nbsp;|&nbsp; 👤 Admin approved</div>
-            <p className="safe" style={{ margin: "14px 0" }}>
-              🔒 NIC numbers, addresses and phone numbers are redacted in public previews under the Personal Data Protection Act.
-            </p>
+            <div className="aiband">{t("doc_ai")}</div>
+            <p className="safe" style={{ margin: "14px 0" }}>🔒 {t("doc_pdpa")}</p>
             <button className="btn btn-ghost" style={{ width: "100%", justifyContent: "center" }} onClick={() => setOpen(null)}>
-              ← Back to {patient.name.split(" ")[0]}&apos;s page
+              {t("doc_back").replace("{name}", patient.name.split(" ")[0])}
             </button>
           </div>
         )}
