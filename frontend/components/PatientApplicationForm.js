@@ -4,34 +4,36 @@ import { useState } from "react";
 import Link from "next/link";
 import PhotoUploader from "./PhotoUploader";
 import { DISTRICTS } from "@/lib/constants";
+import { useLanguage } from "./LanguageProvider";
 import { useAuth } from "./AuthProvider";
 import { emptyCampaignRecord, useCampaignRecord } from "@/lib/campaignStore";
 import { todayISO } from "@/lib/dates";
 import { notifyAdmins } from "@/lib/notificationStore";
 
 const DOCUMENTS = [
-  { name: "medicalReports", label: "📄 Medical reports" },
-  { name: "hospitalBills", label: "🧾 Hospital bills" },
-  { name: "doctorLetter", label: "🖊 Doctor's recommendation" },
-  { name: "costEstimate", label: "💰 Cost estimation letter" },
-  { name: "gnCertificate", label: "🏛 Grama Niladhari certificate" },
+  { name: "medicalReports", label: "ap_doc_reports" },
+  { name: "hospitalBills", label: "ap_doc_bills" },
+  { name: "doctorLetter", label: "doc_letter" },
+  { name: "costEstimate", label: "ap_doc_estimate" },
+  { name: "gnCertificate", label: "doc_gn" },
 ];
 
 const NEXT_STEPS = [
-  { title: "Submitted ✓", text: "Documents uploaded securely.", color: "var(--green)", ring: "var(--green-soft)" },
-  { title: "AI document check — in progress", text: "Stamps, signatures and duplicates are being scanned.", color: "#B8860B", ring: "#FFF1E0" },
-  { title: "Admin review", text: "A MedFund reviewer confirms the AI result with the hospital.", color: "var(--mist)", ring: "var(--paper)" },
-  { title: "Campaign goes live", text: "You receive a registration number like MED-2026-000181.", color: "var(--mist)", ring: "var(--paper)" },
+  { title: "ap_s1_t", text: "ap_s1", color: "var(--green)", ring: "var(--green-soft)" },
+  { title: "ap_s2_t", text: "ap_s2", color: "#B8860B", ring: "#FFF1E0" },
+  { title: "step_admin", text: "ap_s3", color: "var(--mist)", ring: "var(--paper)" },
+  { title: "ap_s4_t", text: "ap_s4", color: "var(--mist)", ring: "var(--paper)" },
 ];
 
 function DocumentInput({ name, label }) {
+  const { t } = useLanguage();
   const [fileName, setFileName] = useState("");
 
   return (
     <label className="doc" style={{ cursor: "pointer" }}>
-      {label}
+      {t(label)}
       <span className="st" style={fileName ? undefined : { background: "var(--mist)", color: "var(--blue)" }}>
-        {fileName ? "Attached ✓" : "Upload"}
+        {fileName ? t("ap_attached") : t("ap_upload")}
       </span>
       <input type="file" name={name} accept="image/*,.pdf" hidden onChange={(e) => setFileName(e.target.files[0]?.name ?? "")} />
     </label>
@@ -39,6 +41,7 @@ function DocumentInput({ name, label }) {
 }
 
 export default function PatientApplicationForm() {
+  const { t } = useLanguage();
   const { user } = useAuth();
   const [record, save] = useCampaignRecord(user?.id);
   const [tracking, setTracking] = useState(null);
@@ -67,15 +70,15 @@ export default function PatientApplicationForm() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (submitted) {
+  if (tracking) {
     return (
       <div className="panel" style={{ textAlign: "center" }}>
         <div className="success">
           <div className="ring">✓</div>
-          <h3>Application received</h3>
+          <h3>{t("ap_received")}</h3>
           <p>
-            Tracking number: <b>{tracking}</b>
-            <br />You&apos;ll get an SMS and email at every step below.
+            {t("tracking_no")}: <b>{tracking}</b>
+            <br />{t("ap_sms")}
           </p>
         </div>
         <div style={{ maxWidth: 420, margin: "0 auto", textAlign: "left" }}>
@@ -86,14 +89,14 @@ export default function PatientApplicationForm() {
                 {i < NEXT_STEPS.length - 1 && <div className="ln" />}
               </div>
               <div className="tx">
-                <b>{step.title}</b>
-                <p>{step.text}</p>
+                <b>{t(step.title)}</b>
+                <p>{t(step.text)}</p>
               </div>
             </div>
           ))}
         </div>
         <Link className="btn btn-blue" href={user ? "/profile" : "/"} style={{ marginTop: 10 }}>
-          {user ? "Track it on my profile" : "Back to home"}
+          {user ? t("ap_track_profile") : t("go_home")}
         </Link>
       </div>
     );
@@ -103,64 +106,62 @@ export default function PatientApplicationForm() {
     // re-mounts once the user is known, so their name, phone and email fill in
     <form key={user?.id ?? "guest"} onSubmit={handleSubmit}>
       <div className="panel" style={{ marginBottom: 18 }}>
-        <h3>1 · Personal details</h3>
+        <h3>{t("ap_sec1")}</h3>
         <div className="formgrid">
-          <div className="field"><label>Full name (as on NIC)</label><input name="fullName" required defaultValue={user?.name} placeholder="Patient's full name" /></div>
-          <div className="field"><label>NIC number</label><input name="nic" required  placeholder="XXXXXXXXXV / 12-digit NIC" /></div>
-          <div className="field"><label>Date of birth</label><input name="dob" type="date" /></div>
-          <div className="field"><label>Phone</label><input name="phone" type="tel" required defaultValue={user?.phone} placeholder="07X XXX XXXX" /></div>
-          <div className="field"><label>Email</label><input name="email" type="email" defaultValue={user?.email} placeholder="name@email.com" /></div>
+          <div className="field"><label>{t("ap_name_nic")}</label><input name="fullName" required defaultValue={user?.name} placeholder={t("ap_name_ph")} /></div>
+          <div className="field"><label>{t("ap_nic")}</label><input name="nic" required placeholder={t("ap_nic_ph")} /></div>
+          <div className="field"><label>{t("ap_dob")}</label><input name="dob" type="date" /></div>
+          <div className="field"><label>{t("phone")}</label><input name="phone" type="tel" required defaultValue={user?.phone} placeholder="07X XXX XXXX" /></div>
+          <div className="field"><label>{t("email")}</label><input name="email" type="email" defaultValue={user?.email} placeholder="name@email.com" /></div>
           <div className="field">
-            <label>District</label>
+            <label>{t("lbl_district")}</label>
             <select name="district" defaultValue="Colombo">
               {DISTRICTS.map((d) => <option key={d}>{d}</option>)}
             </select>
           </div>
-          <div className="field full"><label>Address</label><input name="address" placeholder="House no, street, town" /></div>
+          <div className="field full"><label>{t("ap_address")}</label><input name="address" placeholder={t("ap_address_ph")} /></div>
         </div>
       </div>
 
       <div className="panel" style={{ marginBottom: 18 }}>
-        <h3>2 · Patient photos <span className="si">රෝගියාගේ ඡායාරූප</span></h3>
-        <p>A clear, recent photo builds donor trust — it appears on the campaign page after approval. You can add up to 6 more photos (hospital, recovery, family) as a gallery.</p>
+        <h3>{t("ap_sec2")}</h3>
+        <p>{t("ap_photos_p")}</p>
         <PhotoUploader />
-        <div className="note">
-          🛡 Upload photos only with the patient&apos;s consent. Please avoid graphic medical images — reports and scans belong in the private documents section below.
-        </div>
+        <div className="note">🛡 {t("ap_photos_note")}</div>
       </div>
 
       <div className="panel" style={{ marginBottom: 18 }}>
-        <h3>3 · Medical details</h3>
+        <h3>{t("ap_sec3")}</h3>
         <div className="formgrid">
-          <div className="field"><label>Disease / condition</label><input name="disease" required placeholder="e.g. Kidney failure" /></div>
-          <div className="field"><label>Hospital</label><input name="hospital" required placeholder="e.g. National Hospital, Colombo" /></div>
-          <div className="field"><label>Consultant doctor</label><input name="doctor" placeholder="Dr. …" /></div>
-          <div className="field"><label>Treatment needed</label><input name="treatment" placeholder="e.g. Transplant surgery" /></div>
-          <div className="field"><label>Required amount (Rs)</label><input name="amount" type="number" min="1" required placeholder="e.g. 2500000" /></div>
-          <div className="field"><label>Deadline</label><input name="deadline" type="date" /></div>
+          <div className="field"><label>{t("ap_disease")}</label><input name="disease" required placeholder={t("ap_disease_ph")} /></div>
+          <div className="field"><label>{t("fact_hospital")}</label><input name="hospital" required placeholder={t("ap_hospital_ph")} /></div>
+          <div className="field"><label>{t("ap_doctor")}</label><input name="doctor" placeholder={t("ap_doctor_ph")} /></div>
+          <div className="field"><label>{t("ap_treatment")}</label><input name="treatment" placeholder={t("ap_treatment_ph")} /></div>
+          <div className="field"><label>{t("ap_amount")}</label><input name="amount" type="number" min="1" required placeholder={t("ap_amount_ph")} /></div>
+          <div className="field"><label>{t("ap_deadline")}</label><input name="deadline" type="date" /></div>
           <div className="field full">
-            <label>Campaign urgency</label>
+            <label>{t("ap_urgency")}</label>
             <div className="urgopt">
-              <label><input type="radio" name="urgency" value="urgent" /> ⚡ <b>&nbsp;Urgent</b> — treatment is time-critical; shown on the Urgent needs board after approval</label>
-              <label><input type="radio" name="urgency" value="normal" defaultChecked /> 🗓 <b>&nbsp;Non-urgent</b> — standard campaign</label>
+              <label><input type="radio" name="urgency" value="urgent" /> <span><b>⚡ {t("urgent")}</b> — {t("ap_urgent_desc")}</span></label>
+              <label><input type="radio" name="urgency" value="normal" defaultChecked /> <span><b>🗓 {t("nonurg")}</b> — {t("ap_normal_desc")}</span></label>
             </div>
           </div>
         </div>
       </div>
 
       <div className="panel" style={{ marginBottom: 18 }}>
-        <h3>4 · Bank details <span className="si">shown masked to the public</span></h3>
+        <h3>{t("ap_sec4")} <span className="si">{t("ap_masked")}</span></h3>
         <div className="formgrid">
-          <div className="field"><label>Bank</label><input name="bank" placeholder="e.g. Bank of Ceylon" /></div>
-          <div className="field"><label>Branch</label><input name="branch" placeholder="e.g. Moratuwa" /></div>
-          <div className="field"><label>Account holder</label><input name="accountHolder" placeholder="Must match the NIC name" /></div>
-          <div className="field"><label>Account number</label><input name="accountNumber" placeholder="XXXX XXXX XXXX" /></div>
+          <div className="field"><label>{t("bank_bank")}</label><input name="bank" placeholder={t("ap_bank_ph")} /></div>
+          <div className="field"><label>{t("bank_branch")}</label><input name="branch" placeholder={t("ap_branch_ph")} /></div>
+          <div className="field"><label>{t("bank_holder")}</label><input name="accountHolder" placeholder={t("ap_holder_ph")} /></div>
+          <div className="field"><label>{t("bank_number")}</label><input name="accountNumber" placeholder="XXXX XXXX XXXX" /></div>
         </div>
       </div>
 
       <div className="panel" style={{ marginBottom: 18 }}>
-        <h3>5 · Documents for verification</h3>
-        <p>Clear photos or PDF scans. The AI reads stamps, signatures and text; a MedFund admin then approves every campaign manually.</p>
+        <h3>{t("ap_sec5")}</h3>
+        <p>{t("ap_docs_p")}</p>
         <div className="docgrid">
           {DOCUMENTS.map((d) => <DocumentInput key={d.name} {...d} />)}
         </div>
@@ -168,10 +169,10 @@ export default function PatientApplicationForm() {
 
       <label className="anon" style={{ alignItems: "start", marginBottom: 14 }}>
         <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} style={{ marginTop: 3 }} />
-        I confirm this information is true, and consent to MedFund verifying these documents with the hospital and displaying redacted copies publicly (Personal Data Protection Act consent).
+        {t("ap_consent")}
       </label>
       <button type="submit" className="btn btn-green btn-big" style={{ width: "100%", justifyContent: "center", opacity: consent ? 1 : 0.5 }} disabled={!consent}>
-        Submit for verification
+        {t("ap_submit")}
       </button>
     </form>
   );

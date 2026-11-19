@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "./LanguageProvider";
 
 const MAX_GALLERY = 6;
 let nextId = 0;
 
 export default function PhotoUploader() {
+  const { t } = useLanguage();
   const [mainPhoto, setMainPhoto] = useState(null);
   const [gallery, setGallery] = useState([]);
 
@@ -31,9 +33,9 @@ export default function PhotoUploader() {
       <label className="mainphoto">
         {mainPhoto ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={mainPhoto} alt="Patient photo" />
+          <img src={mainPhoto} alt={t("ph_main")} />
         ) : (
-          <span>📷<br />Main photo<br /><small>tap to upload</small></span>
+          <span>📷<br />{t("ph_main")}<br /><small>{t("ph_tap")}</small></span>
         )}
         <input type="file" name="mainPhoto" accept="image/*" hidden onChange={handleMain} />
       </label>
@@ -42,8 +44,8 @@ export default function PhotoUploader() {
         {gallery.map((photo) => (
           <div className="thumb" key={photo.id}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={photo.url} alt="Gallery photo" />
-            <button type="button" title="Remove" onClick={() => remove(photo.id)}>✕</button>
+            <img src={photo.url} alt={t("ph_gallery")} />
+            <button type="button" title={t("ph_remove")} aria-label={t("ph_remove")} onClick={() => remove(photo.id)}>✕</button>
           </div>
         ))}
         {gallery.length < MAX_GALLERY && (
